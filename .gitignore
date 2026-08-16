@@ -1,0 +1,13 @@
+# Repo-root guard, in case git is initialised at the ViewGuessr/ level
+# rather than inside source-code/.
+
+node_modules/
+.next/
+.vercel
+.DS_Store
+
+# env files — NEVER commit these
+.env
+.env.local
+.env.*.local
+!.env.example

@@ -1,0 +1,14 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="vgBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EF233C"/>
+      <stop offset="100%" stop-color="#D80032"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="96" height="96" rx="24" fill="#FFFFFF"/>
+  <rect x="26" y="55" width="14" height="22" rx="5" fill="#8D99AE"/>
+  <rect x="45" y="43" width="14" height="34" rx="5" fill="url(#vgBar)"/>
+  <rect x="64" y="31" width="14" height="46" rx="5" fill="url(#vgBar)"/>
+  <path d="M75.5 17.5c4.6 0 8 3 8 7.2 0 3.3-1.9 5-4 6.3-1.8 1.1-2.6 1.9-2.6 3.6v.8" stroke="#D80032" stroke-width="4.4" stroke-linecap="round" fill="none"/>
+  <circle cx="74.8" cy="41.2" r="2.8" fill="#D80032"/>
+</svg>

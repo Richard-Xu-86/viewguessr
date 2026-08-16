@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#7B2FF7"/><stop offset="100%" stop-color="#F0254F"/>
+</linearGradient><radialGradient id="shine" cx="50%" cy="-10%" r="90%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="white" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<circle cx="512" cy="512" r="300" fill="none" stroke="white" stroke-width="44" opacity="0.96"/>
+<line x1="512" y1="92" x2="512" y2="248" stroke="white" stroke-width="44" stroke-linecap="round"/>
+<line x1="512" y1="776" x2="512" y2="932" stroke="white" stroke-width="44" stroke-linecap="round"/>
+<line x1="92" y1="512" x2="248" y2="512" stroke="white" stroke-width="44" stroke-linecap="round"/>
+<line x1="776" y1="512" x2="932" y2="512" stroke="white" stroke-width="44" stroke-linecap="round"/>
+<path d="M 425 395 L 640 512 L 425 629 Z" fill="white"/>
+<rect width="1024" height="1024" fill="url(#shine)"/>
+</svg>

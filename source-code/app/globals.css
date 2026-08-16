@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #faf7f0; /* papier crème (DA print) */
+  --ink-soft: #ffffff;
+  --strawberry: #ef233c;
+  --crimson: #d80032;
+  --platinum: #15171f;
+  --lavender: #5b6478;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--ink);
+  color: var(--platinum);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.011em;
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Curseur personnalisé sur tout le site (PNG = compatible Safari). */
+html,
+body,
+* {
+  cursor: url("/cursor.png") 2 2, auto;
+}
+a,
+button,
+label,
+summary,
+select,
+[role="button"],
+input[type="range"].vg-range {
+  cursor: url("/cursor.png") 2 2, pointer;
+}
+
+.font-display {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Cartes (DA print). SANS backdrop-filter : fond solide, donc aucun recalcul
+   de flou pendant le scroll (principal gain de perf Chrome).
+   .glass = surface légère bordée ; .glass-strong = carte « encre » à ombre dure. */
+.glass {
+  background: #ffffff;
+  border: 2px solid rgba(21, 23, 31, 0.12);
+}
+
+.glass-strong {
+  background: #ffffff;
+  border: 2px solid #15171f;
+  box-shadow: 6px 6px 0 0 #15171f;
+}
+
+/* Sauter le rendu des sections hors écran (gain de scroll sur Chrome). */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* ------------------------------------------------------------------ */
+/* DA « print & compteur » (landing) : papier crème, encre, ombres     */
+/* dures. Aucun flou, aucun dégradé décoratif → identité affirmée.     */
+/* ------------------------------------------------------------------ */
+
+.font-accent {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+/* Carte « encre » : bordure pleine + ombre dure décalée. */
+.card-ink {
+  background: #ffffff;
+  border: 2px solid #15171f;
+  box-shadow: 6px 6px 0 0 #15171f;
+}
+a .card-ink,
+.card-ink-hover {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+a:hover .card-ink,
+.card-ink-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 9px 9px 0 0 #15171f;
+}
+
+/* Bouton principal « encre » : noir, ombre rouge dure. */
+.btn-ink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid #15171f;
+  background: #15171f;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 0 #d80032;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-ink:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 0 #d80032;
+}
+.btn-ink:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #d80032;
+}
+
+/* Bouton secondaire « papier ». */
+.btn-paper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid #15171f;
+  background: #fff;
+  color: #15171f;
+  font-weight: 700;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 0 #15171f;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-paper:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 0 #15171f;
+}
+.btn-paper:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #15171f;
+}
+
+/* Petit sticker / étiquette. */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 2px solid #15171f;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #15171f;
+  box-shadow: 2px 2px 0 0 #15171f;
+}
+
+/* Surligneur rouge sur un mot du titre. */
+.hl-red {
+  display: inline-block;
+  background: linear-gradient(120deg, #ef233c, #d80032);
+  color: #fff;
+  padding: 0 0.18em;
+  border-radius: 0.18em;
+  transform: rotate(-1.2deg);
+  box-shadow: 4px 4px 0 0 #15171f;
+}
+
+/* Texte dégradé */
+.text-gradient {
+  background: linear-gradient(110deg, #ef233c 0%, #ff5c72 45%, #d80032 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Bordure dégradée animée (cartes) */
+.border-gradient {
+  position: relative;
+}
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 35, 60, 0.5),
+    rgba(20, 23, 31, 0.08) 40%,
+    rgba(216, 0, 50, 0.45)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Liens dans les pages légales */
+.legal a {
+  color: var(--crimson);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal a:hover {
+  color: var(--strawberry);
+}
+
+/* Marquee fade sur les bords */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(154, 163, 184, 0.28);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Slider de vues (input range) */
+input[type="range"].vg-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"].vg-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 5px solid var(--crimson);
+  box-shadow: 0 6px 22px rgba(216, 0, 50, 0.6);
+  transition: transform 0.12s ease;
+}
+input[type="range"].vg-range::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+input[type="range"].vg-range::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 5px solid var(--crimson);
+  box-shadow: 0 6px 22px rgba(216, 0, 50, 0.6);
+}
+
+/* Dérive des halos du fond (translate uniquement = composité par le GPU, sans lag) */
+@keyframes vgb1 { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(10%, 8%, 0); } }
+@keyframes vgb2 { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(-12%, 6%, 0); } }
+@keyframes vgb3 { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(7%, -10%, 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
