@@ -1,8 +1,10 @@
+import { PUBLISHER } from "@/lib/publisher";
+
 const SITE_URL = "https://view-guessr.com";
 
 /**
  * Données structurées Schema.org (JSON-LD) injectées sur toutes les pages
- * via le layout racine. Décrit le site, l'éditeur PENRA et le jeu ViewGuessr
+ * via le layout racine. Décrit le site, l'éditeur et le jeu ViewGuessr
  * pour aider Google à comprendre et à afficher des rich results.
  */
 export function JsonLd() {
@@ -18,21 +20,21 @@ export function JsonLd() {
         inLanguage: "fr-FR",
         description:
           "Jeu gratuit où l'on devine le nombre de vues de vraies vidéos YouTube tendance.",
-        publisher: { "@id": `${SITE_URL}/#penra` },
+        publisher: { "@id": `${SITE_URL}/#publisher` },
       },
       {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#penra`,
-        name: "PENRA",
-        legalName: "Adrien Pennetier",
+        "@id": `${SITE_URL}/#publisher`,
+        name: PUBLISHER.tradingName,
+        legalName: PUBLISHER.legalName,
         url: SITE_URL,
         logo: `${SITE_URL}/logo.png`,
-        founder: { "@type": "Person", name: "Adrien Pennetier" },
+        founder: { "@type": "Person", name: PUBLISHER.legalName },
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Strasbourg",
-          addressRegion: "Grand Est",
-          addressCountry: "FR",
+          addressLocality: PUBLISHER.city,
+          addressRegion: PUBLISHER.region,
+          addressCountry: PUBLISHER.countryCode,
         },
       },
       {
@@ -55,8 +57,8 @@ export function JsonLd() {
           minValue: 1,
           maxValue: 10,
         },
-        author: { "@id": `${SITE_URL}/#penra` },
-        publisher: { "@id": `${SITE_URL}/#penra` },
+        author: { "@id": `${SITE_URL}/#publisher` },
+        publisher: { "@id": `${SITE_URL}/#publisher` },
         offers: {
           "@type": "Offer",
           name: "Accès à vie",

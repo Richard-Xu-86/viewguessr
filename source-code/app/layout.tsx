@@ -1,3 +1,4 @@
+import { PUBLISHER } from "@/lib/publisher";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { JsonLd } from "@/components/JsonLd";
@@ -16,9 +17,9 @@ export const metadata: Metadata = {
   description:
     "ViewGuessr, le jeu gratuit où tu devines le nombre de vues de vraies vidéos YouTube tendance. Joue en solo ou en multijoueur contre tes amis avec un code de partie. Sans inscription, en français.",
   applicationName: "ViewGuessr",
-  authors: [{ name: "PENRA" }],
-  creator: "PENRA",
-  publisher: "PENRA",
+  authors: [{ name: PUBLISHER.tradingName }],
+  creator: PUBLISHER.tradingName,
+  publisher: PUBLISHER.tradingName,
   category: "game",
   keywords: [
     "ViewGuessr",
@@ -95,7 +96,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

@@ -1,8 +1,9 @@
+import { PUBLISHER } from "@/lib/publisher";
 const SITE_URL = "https://view-guessr.com";
 
 /**
  * Données structurées Article (JSON-LD) pour une page de contenu / guide.
- * Relie l'article à l'éditeur PENRA et au site, en plus du graph global
+ * Relie l'article à l'éditeur et au site, en plus du graph global
  * (WebSite / Organization / VideoGame) déjà injecté par <JsonLd/>.
  */
 export function ArticleLd({
@@ -32,10 +33,10 @@ export function ArticleLd({
     image: `${SITE_URL}/logo.png`,
     datePublished,
     dateModified: dateModified || datePublished,
-    author: { "@type": "Organization", name: "PENRA", url: SITE_URL },
+    author: { "@type": "Organization", name: PUBLISHER.tradingName, url: SITE_URL },
     publisher: {
       "@type": "Organization",
-      name: "PENRA",
+      name: PUBLISHER.tradingName,
       logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
     isPartOf: { "@id": `${SITE_URL}/#website` },

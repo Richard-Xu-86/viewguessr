@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { PUBLISHER } from "@/lib/publisher";
 
 export const metadata: Metadata = {
   title: "CGU & CGV",
@@ -13,9 +14,9 @@ export default function CGU() {
     <LegalPage title="Conditions générales (CGU & CGV)" updated="juin 2026">
       <LegalSection title="1. Objet">
         <p>
-          Les présentes conditions régissent l&apos;utilisation du jeu ViewGuessr,
-          édité par <strong>PENRA</strong>, entreprise individuelle d&apos;Adrien
-          Pennetier (SIREN 989&nbsp;816&nbsp;947, Strasbourg), ainsi que la vente de
+          Les présentes conditions régissent l&apos;utilisation du jeu{" "}
+          {PUBLISHER.tradingName}, édité par{" "}
+          <strong>{PUBLISHER.legalName}</strong>, ainsi que la vente de
           l&apos;accès « à vie ».
         </p>
       </LegalSection>
@@ -35,8 +36,8 @@ export default function CGU() {
           abonnement. Le paiement est opéré par Stripe.
         </p>
         <p>
-          « À vie » s&apos;entend pour la durée d&apos;existence du service. PENRA ne
-          peut garantir une disponibilité perpétuelle en cas d&apos;arrêt du service
+          « À vie » s&apos;entend pour la durée d&apos;existence du service.{" "}
+          {PUBLISHER.legalName} ne peut garantir une disponibilité perpétuelle en cas d&apos;arrêt du service
           ou de l&apos;API YouTube.
         </p>
       </LegalSection>
@@ -47,7 +48,7 @@ export default function CGU() {
           contenu numérique fourni immédiatement, tu reconnais renoncer à ton droit
           de rétractation dès que l&apos;accès est débloqué. Pour toute question ou
           réclamation :{" "}
-          <a href="mailto:penra.contact@gmail.com">penra.contact@gmail.com</a>.
+          <a href={`mailto:${PUBLISHER.email}`}>{PUBLISHER.email}</a>.
         </p>
       </LegalSection>
 
@@ -69,8 +70,8 @@ export default function CGU() {
 
       <LegalSection title="7. Responsabilité">
         <p>
-          Le service est fourni « en l&apos;état ». La responsabilité de PENRA ne
-          saurait être engagée pour une indisponibilité temporaire ou une
+          Le service est fourni « en l&apos;état ». La responsabilité de{" "}
+          {PUBLISHER.legalName} ne saurait être engagée pour une indisponibilité temporaire ou une
           interruption indépendante de sa volonté.
         </p>
       </LegalSection>
@@ -78,7 +79,7 @@ export default function CGU() {
       <LegalSection title="8. Médiation de la consommation">
         <p>
           En cas de litige, tu dois d&apos;abord nous contacter à{" "}
-          <a href="mailto:penra.contact@gmail.com">penra.contact@gmail.com</a> afin
+          <a href={`mailto:${PUBLISHER.email}`}>{PUBLISHER.email}</a> afin
           de rechercher une solution amiable. À défaut d&apos;accord, et conformément
           aux articles L611-1 et suivants du Code de la consommation, tu peux
           recourir gratuitement à un médiateur de la consommation&nbsp;; ses
@@ -88,7 +89,7 @@ export default function CGU() {
 
       <LegalSection title="9. Droit applicable">
         <p>
-          Les présentes conditions sont soumises au droit français. En cas de
+          Les présentes conditions sont soumises à {PUBLISHER.governingLaw}. En cas de
           litige, une solution amiable sera recherchée avant toute action
           judiciaire.
         </p>

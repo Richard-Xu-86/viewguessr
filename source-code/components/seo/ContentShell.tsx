@@ -1,4 +1,6 @@
+import { PUBLISHER } from "@/lib/publisher";
 import Link from "next/link";
+import { SyncHtmlLang } from "@/components/SyncHtmlLang";
 
 type Locale = "fr" | "en";
 
@@ -40,7 +42,9 @@ export function ContentShell({
   };
 
   return (
-    <main className="relative min-h-dvh">
+    <>
+      <SyncHtmlLang lang={locale} />
+      <main className="relative min-h-dvh">
       {/* Fond papier crème à pointillés (rendu serveur, sans JS). */}
       <div
         aria-hidden
@@ -157,11 +161,12 @@ export function ContentShell({
 
           <div className="mt-12 border-t border-platinum/10 pt-6">
             <p className="text-xs text-lavender/70">
-              © {new Date().getFullYear()} PENRA · ViewGuessr. {t.rights}
+              © {new Date().getFullYear()} {PUBLISHER.tradingName}. {t.rights}
             </p>
           </div>
         </div>
       </footer>
     </main>
+    </>
   );
 }

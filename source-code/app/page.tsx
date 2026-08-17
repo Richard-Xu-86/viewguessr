@@ -1,5 +1,6 @@
 "use client";
 
+import { PUBLISHER } from "@/lib/publisher";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -484,7 +485,7 @@ export default function Home() {
             <div>
               <div className="text-sm font-semibold text-platinum">{t("footer.company")}</div>
               <ul className="mt-3 space-y-2 text-sm text-lavender">
-                <li><a href="mailto:penra.contact@gmail.com" className="hover:text-platinum">{t("footer.contact")}</a></li>
+                <li><a href={`mailto:${PUBLISHER.email}`} className="hover:text-platinum">{t("footer.contact")}</a></li>
                 <li><Link href="/pro" className="hover:text-platinum">{t("footer.support")}</Link></li>
                 <li><Link href="/mentions-legales" className="hover:text-platinum">{t("footer.editor")}</Link></li>
               </ul>
@@ -503,7 +504,7 @@ export default function Home() {
 
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-platinum/10 pt-6 sm:flex-row">
             <p className="text-xs text-lavender/70">
-              © {new Date().getFullYear()} PENRA ViewGuessr. {t("footer.rights")}
+              © {new Date().getFullYear()} {PUBLISHER.tradingName}. {t("footer.rights")}
             </p>
           </div>
         </div>

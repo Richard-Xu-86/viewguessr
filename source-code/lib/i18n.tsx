@@ -25,10 +25,10 @@ interface Ctx {
   setLocale: (l: Locale) => void;
 }
 
-const LocaleContext = createContext<Ctx>({ locale: "fr", setLocale: () => {} });
+const LocaleContext = createContext<Ctx>({ locale: "en", setLocale: () => {} });
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("fr");
+  const [locale, setLocaleState] = useState<Locale>("en");
 
   useEffect(() => {
     // 1) Choix explicite de l'utilisateur (toggle) → prioritaire et persistant.

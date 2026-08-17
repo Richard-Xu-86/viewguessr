@@ -498,4 +498,26 @@ export const messages: Record<MsgKey, Entry> = {
     fr: "Ce pseudo n'est pas autorisé. Choisis-en un autre.",
     en: "This nickname isn't allowed. Pick another one.",
   },
+
+  // --- Page de remerciement (/merci) ---------------------------------------
+  "merci.checking": { fr: "Vérification du paiement…", en: "Verifying your payment…" },
+  "merci.title": { fr: "Merci ! Tu as l'accès", en: "Thank you! You have" },
+  "merci.titleHl": { fr: "à vie", en: "lifetime access" },
+  "merci.subtitle": {
+    fr: "Tout est débloqué, pour toujours. Bon jeu et bonne chance pour deviner les vues.",
+    en: "Everything is unlocked, forever. Have fun, and good luck guessing those views.",
+  },
+  "merci.codeLabel": { fr: "Ton code d'accès à vie", en: "Your lifetime access code" },
+  "merci.copy": { fr: "Copier le code", en: "Copy code" },
+  "merci.copied": { fr: "Copié ✓", en: "Copied ✓" },
+  "merci.codeHint": {
+    fr: "Garde ce code : c'est lui (et non ton e-mail) qui débloque ton accès sur tes autres appareils.",
+    en: "Keep this code safe: it is what unlocks your access on other devices, not your email address.",
+  },
+  "merci.playSolo": { fr: "▶ Jouer en solo", en: "▶ Play solo" },
+  "merci.errorTitle": { fr: "Paiement non confirmé", en: "Payment not confirmed" },
+  "merci.errorBody": {
+    fr: "Si tu viens de payer, patiente quelques secondes et recharge la page. Sinon, tu peux réessayer.",
+    en: "If you just paid, wait a few seconds and reload the page. Otherwise, you can try again.",
+  },
 };

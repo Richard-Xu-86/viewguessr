@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { PUBLISHER } from "@/lib/publisher";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
@@ -12,12 +13,12 @@ export default function Confidentialite() {
   return (
     <LegalPage title="Politique de confidentialité" updated="juin 2026">
       <p>
-        ViewGuessr (édité par PENRA Adrien Pennetier) attache de l&apos;importance
-        à ta vie privée. Le jeu est conçu pour collecter le minimum de données.
+        {PUBLISHER.tradingName} (édité par {PUBLISHER.legalName}) attache de
+        l&apos;importance à ta vie privée. Le jeu est conçu pour collecter le minimum de données.
       </p>
       <p>
-        Responsable du traitement : PENRA (Adrien Pennetier), Strasbourg{" "}
-        <a href="mailto:penra.contact@gmail.com">penra.contact@gmail.com</a>.
+        Responsable du traitement : {PUBLISHER.legalName}, {PUBLISHER.city}{" "}
+        <a href={`mailto:${PUBLISHER.email}`}>{PUBLISHER.email}</a>.
       </p>
 
       <LegalSection title="Aucun compte requis">
@@ -113,7 +114,7 @@ export default function Confidentialite() {
           rectification et de suppression de tes données. Les données locales
           peuvent être effacées en vidant le stockage de ton navigateur. Pour toute
           demande :{" "}
-          <a href="mailto:penra.contact@gmail.com">penra.contact@gmail.com</a>.
+          <a href={`mailto:${PUBLISHER.email}`}>{PUBLISHER.email}</a>.
         </p>
       </LegalSection>
     </LegalPage>
