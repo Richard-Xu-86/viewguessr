@@ -62,8 +62,8 @@ export function JsonLd() {
         offers: {
           "@type": "Offer",
           name: "Accès à vie",
-          price: "3.99",
-          priceCurrency: "EUR",
+          price: "5.99",
+          priceCurrency: "CAD",
           availability: "https://schema.org/InStock",
           category: "Paiement unique",
           url: `${SITE_URL}/pro`,

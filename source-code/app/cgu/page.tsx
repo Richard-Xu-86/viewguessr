@@ -5,7 +5,7 @@ import { PUBLISHER } from "@/lib/publisher";
 export const metadata: Metadata = {
   title: "CGU & CGV",
   description:
-    "Conditions générales d'utilisation et de vente de ViewGuessr : accès gratuit, offre « accès à vie » à 3,99 € en paiement unique, droit de rétractation et responsabilité.",
+    "Conditions générales d'utilisation et de vente de ViewGuessr : accès gratuit, offre « accès à vie » à 5,99 $ CA en paiement unique, droit de rétractation et responsabilité.",
   alternates: { canonical: "/cgu" },
 };
 
@@ -32,7 +32,7 @@ export default function CGU() {
       <LegalSection title="3. Offre « à vie » et prix">
         <p>
           L&apos;accès à vie est proposé au prix indiqué sur la page d&apos;achat (à
-          ce jour 3,99 € TTC), par <strong>paiement unique</strong>, sans
+          ce jour 5,99 $ CA), par <strong>paiement unique</strong>, sans
           abonnement. Le paiement est opéré par Stripe.
         </p>
         <p>

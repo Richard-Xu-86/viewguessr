@@ -194,7 +194,7 @@ export default function Page() {
           },
           {
             q: "How many people can play ViewGuessr together?",
-            a: "Up to 10 players in one multiplayer game. One free multiplayer game per day is included; lifetime access (€3.99, one-time) unlocks unlimited multiplayer.",
+            a: "Up to 10 players in one multiplayer game. One free multiplayer game per day is included; lifetime access (CA$5.99, one-time) unlocks unlimited multiplayer.",
           },
           {
             q: "Are these games free?",

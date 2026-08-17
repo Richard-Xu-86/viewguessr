@@ -61,8 +61,8 @@ export async function POST(req: NextRequest) {
         {
           quantity: 1,
           price_data: {
-            currency: "eur",
-            unit_amount: 399, // 3,99 €
+            currency: "cad",
+            unit_amount: 599, // 5,99 $ CA
             product_data: {
               name: "ViewGuessr Accès à vie",
               description:

@@ -218,7 +218,7 @@ export function useMultiplayer() {
       // Le mode « Plus ou moins » est un avantage de l'accès à vie (côté hôte).
       if (mode === "hl" && !isPro()) {
         setErrorMsg(
-          "Le mode Plus ou moins est réservé à l'accès à vie. Débloque-le pour 3,99 € une seule fois."
+          "Le mode Plus ou moins est réservé à l'accès à vie. Débloque-le pour 5,99 $ CA une seule fois."
         );
         setPhase("error");
         return;

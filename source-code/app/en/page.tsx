@@ -191,7 +191,7 @@ export default function Page() {
           },
           {
             q: "Is ViewGuessr free?",
-            a: "Yes. ViewGuessr is free to play with daily games included, and no account is required. An optional lifetime access (€3.99, one-time payment) unlocks unlimited solo and multiplayer plus the Higher or Lower mode.",
+            a: "Yes. ViewGuessr is free to play with daily games included, and no account is required. An optional lifetime access (CA$5.99, one-time payment) unlocks unlimited solo and multiplayer plus the Higher or Lower mode.",
           },
           {
             q: "Do I need an account to play?",

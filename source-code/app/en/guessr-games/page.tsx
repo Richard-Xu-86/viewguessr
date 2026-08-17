@@ -182,7 +182,7 @@ export default function Page() {
           },
           {
             q: "Is ViewGuessr free like GeoGuessr?",
-            a: "ViewGuessr is free and plays with no sign-up, with daily games included. An optional lifetime access at €3.99 (one-time payment) unlocks unlimited modes and multiplayer.",
+            a: "ViewGuessr is free and plays with no sign-up, with daily games included. An optional lifetime access at CA$5.99 (one-time payment) unlocks unlimited modes and multiplayer.",
           },
           {
             q: "Do I need an account to play a guessr?",

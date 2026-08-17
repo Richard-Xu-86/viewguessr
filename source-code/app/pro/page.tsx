@@ -151,7 +151,7 @@ export default function ProPage() {
                   </div>
                   <div className="flex items-end justify-center gap-2">
                     <span className="font-display text-6xl font-bold text-platinum">
-                      3,99 €
+                      5,99 $ CA
                     </span>
                     <span className="mb-2 text-sm font-semibold text-lavender">
                       {t("pro.priceOnce")}

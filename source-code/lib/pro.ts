@@ -18,4 +18,6 @@ export function setPro(value: boolean): void {
   window.dispatchEvent(new Event("vg-pro-change"));
 }
 
-export const PRICE_EUR = 3.99;
+export const PRICE_CAD = 5.99;
+/** @deprecated conservé le temps de la migration EUR -> CAD. */
+export const PRICE_EUR = PRICE_CAD;

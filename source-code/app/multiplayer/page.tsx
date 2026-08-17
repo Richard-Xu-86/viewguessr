@@ -351,7 +351,7 @@ function Setup({ mp }: { mp: MP }) {
             </Button>
             <Link href="/pro">
               <Button variant="glass" className="w-full py-3">
-                Passer à vie · 3,99 €
+                Passer à vie · 5,99 $ CA
               </Button>
             </Link>
             <button

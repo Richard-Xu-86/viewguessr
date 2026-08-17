@@ -67,7 +67,7 @@ export function Offers() {
               {t("offers.free")}
             </div>
           </div>
-          <div className="font-display text-3xl font-bold text-platinum">0 €</div>
+          <div className="font-display text-3xl font-bold text-platinum">0 $</div>
         </div>
 
         {/* Compteur de parties restantes aujourd'hui (en direct) */}
@@ -135,7 +135,7 @@ export function Offers() {
           </div>
         </div>
         <div className="mt-2 flex items-end gap-2">
-          <span className="font-display text-4xl font-bold text-platinum">3,99 €</span>
+          <span className="font-display text-4xl font-bold text-platinum">5,99 $ CA</span>
           <span className="mb-1.5 text-sm text-lavender">{t("offers.once")}</span>
         </div>
 

@@ -143,8 +143,8 @@ export const messages: Record<MsgKey, Entry> = {
   "home.offers.title": { fr: "Gratuit, ou", en: "Free, or" },
   "home.offers.titleAccent": { fr: "à vie", en: "for life" },
   "home.offers.sub": {
-    fr: "Sans accès à vie, tu joues chaque jour : 2 parties solo et 1 partie multijoueur. Pour 3,99 € une seule fois, tout devient illimité.",
-    en: "Without lifetime access, you play every day: 2 solo games and 1 multiplayer game. For €3.99 once, everything becomes unlimited.",
+    fr: "Sans accès à vie, tu joues chaque jour : 2 parties solo et 1 partie multijoueur. Pour 5,99 $ CA une seule fois, tout devient illimité.",
+    en: "Without lifetime access, you play every day: 2 solo games and 1 multiplayer game. For CA$5.99 once, everything becomes unlimited.",
   },
 
   "home.f1.t": { fr: "Vraies vidéos", en: "Real videos" },
@@ -317,8 +317,8 @@ export const messages: Record<MsgKey, Entry> = {
   "pm.start": { fr: "Lancer la série", en: "Start the streak" },
   "pm.lockedTitle": { fr: "Réservé à l'accès à vie", en: "Lifetime access only" },
   "pm.lockedMsg": {
-    fr: "Le mode Plus ou moins est un avantage exclusif de l'accès à vie : séries infinies illimitées, en solo comme en multijoueur, pour 3,99 € une seule fois.",
-    en: "Higher or Lower is a lifetime-access exclusive: unlimited endless streaks, solo and multiplayer, for €3.99 once.",
+    fr: "Le mode Plus ou moins est un avantage exclusif de l'accès à vie : séries infinies illimitées, en solo comme en multijoueur, pour 5,99 $ CA une seule fois.",
+    en: "Higher or Lower is a lifetime-access exclusive: unlimited endless streaks, solo and multiplayer, for CA$5.99 once.",
   },
   "pm.record": { fr: "Record {n}", en: "Record {n}" },
   "pm.streak": { fr: "Série {n}", en: "Streak {n}" },
@@ -343,7 +343,7 @@ export const messages: Record<MsgKey, Entry> = {
   "pm.subs": { fr: "abonnés", en: "subscribers" },
 
   // --- Paywall --------------------------------------------------------------
-  "paywall.toLife": { fr: "Passer à vie 3,99 €", en: "Go lifetime €3.99" },
+  "paywall.toLife": { fr: "Passer à vie 5,99 $ CA", en: "Go lifetime CA$5.99" },
   "paywall.renewIn": { fr: "Renouvellement dans", en: "Renews in" },
 
   // --- Offres (composant) ---------------------------------------------------
@@ -379,7 +379,7 @@ export const messages: Record<MsgKey, Entry> = {
   "offers.p5": { fr: "Paiement unique, sans abonnement", en: "One-time payment, no subscription" },
   "offers.p6": { fr: "Tu soutiens un projet indépendant", en: "You support an indie project" },
   "offers.haveLife": { fr: "Tu as déjà l'accès à vie ✦", en: "You already have lifetime access ✦" },
-  "offers.getLife": { fr: "Passer à l'accès à vie 3,99 €", en: "Get lifetime access €3.99" },
+  "offers.getLife": { fr: "Passer à l'accès à vie 5,99 $ CA", en: "Get lifetime access CA$5.99" },
 
   // --- Activité / percentile ------------------------------------------------
   "activity.games": {
@@ -426,8 +426,8 @@ export const messages: Record<MsgKey, Entry> = {
   },
   "pro.perk5.t": { fr: "Paiement unique", en: "One-time payment" },
   "pro.perk5.d": {
-    fr: "3,99 € une fois. Pas d'abonnement, pas de petite ligne.",
-    en: "€3.99 once. No subscription, no fine print.",
+    fr: "5,99 $ CA une fois. Pas d'abonnement, pas de petite ligne.",
+    en: "CA$5.99 once. No subscription, no fine print.",
   },
   "pro.lifeAccess": { fr: "Accès à vie", en: "Lifetime access" },
   "pro.priceOnce": { fr: "une fois", en: "once" },
@@ -438,7 +438,7 @@ export const messages: Record<MsgKey, Entry> = {
   "pro.alreadyHave": { fr: "Tu as déjà l'accès à vie ✦", en: "You already have lifetime access ✦" },
   "pro.playNow": { fr: "Jouer maintenant →", en: "Play now →" },
   "pro.redirecting": { fr: "Redirection…", en: "Redirecting…" },
-  "pro.unlock": { fr: "Débloquer à vie · 3,99 €", en: "Unlock for life · €3.99" },
+  "pro.unlock": { fr: "Débloquer à vie · 5,99 $ CA", en: "Unlock for life · CA$5.99" },
   "pro.secured": {
     fr: "Paiement sécurisé par Stripe. Accès reconnu automatiquement sur le même appareil ou réseau.",
     en: "Secure payment via Stripe. Access recognized automatically on the same device or network.",

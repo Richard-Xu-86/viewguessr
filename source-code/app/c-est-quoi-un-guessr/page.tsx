@@ -198,7 +198,7 @@ export default function Page() {
           },
           {
             q: "ViewGuessr est-il gratuit comme GeoGuessr ?",
-            a: "ViewGuessr est gratuit et se joue sans inscription, avec des parties quotidiennes offertes. Un accès à vie optionnel à 3,99 € (paiement unique) débloque les modes et le multijoueur illimités.",
+            a: "ViewGuessr est gratuit et se joue sans inscription, avec des parties quotidiennes offertes. Un accès à vie optionnel à 5,99 $ CA (paiement unique) débloque les modes et le multijoueur illimités.",
           },
           {
             q: "Faut-il un compte pour jouer à un guessr ?",

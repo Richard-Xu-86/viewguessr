@@ -219,7 +219,7 @@ export default function Page() {
           },
           {
             q: "Combien de joueurs peuvent jouer ensemble sur ViewGuessr ?",
-            a: "Jusqu'à 10 joueurs dans une même partie multijoueur. Une partie multijoueur gratuite par jour est incluse ; l'accès à vie (3,99 € une seule fois) débloque le multijoueur illimité.",
+            a: "Jusqu'à 10 joueurs dans une même partie multijoueur. Une partie multijoueur gratuite par jour est incluse ; l'accès à vie (5,99 $ CA une seule fois) débloque le multijoueur illimité.",
           },
           {
             q: "Ces jeux sont-ils gratuits ?",
