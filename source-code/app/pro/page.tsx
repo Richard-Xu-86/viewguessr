@@ -7,13 +7,14 @@ import { Aurora } from "@/components/Aurora";
 import { Logo, Wordmark } from "@/components/Logo";
 import { Button } from "@/components/Buttons";
 import { isPro, setPro } from "@/lib/pro";
-import { useT } from "@/lib/i18n";
+import { useT, useLocale } from "@/lib/i18n";
 import { LanguageToggle } from "@/components/LanguageToggle";
 
 const PERK_KEYS = ["perk1", "perk2", "perk3", "perk4", "perk5"];
 
 export default function ProPage() {
   const t = useT();
+  const { locale } = useLocale();
   const PERKS = PERK_KEYS.map((k) => ({ t: t(`pro.${k}.t`), d: t(`pro.${k}.d`) }));
   const [pro, setProState] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,11 @@ export default function ProPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale }),
+      });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || t("pro.error"));
       window.location.href = data.url;

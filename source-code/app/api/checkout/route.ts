@@ -39,9 +39,20 @@ export async function POST(req: NextRequest) {
     .digest("hex")
     .slice(0, 40);
 
+  // Langue de l'acheteur : sert à choisir la langue de l'e-mail contenant le
+  // code d'accès (envoyé depuis /api/webhook). "en" par défaut.
+  let locale: "fr" | "en" = "en";
+  try {
+    const body = await req.json();
+    if (body?.locale === "fr" || body?.locale === "en") locale = body.locale;
+  } catch {
+    /* pas de corps JSON : on garde la valeur par défaut */
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      metadata: { locale },
       // Crée un client Stripe (avec l'e-mail) → permet de restaurer l'achat
       // depuis n'importe quel navigateur via /api/restore.
       customer_creation: "always",

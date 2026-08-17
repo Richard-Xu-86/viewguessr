@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getOrCreateLicenseCode } from "@/lib/licenses-server";
+import { sendLicenseEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,7 +42,13 @@ export async function POST(req: NextRequest) {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.payment_status === "paid") {
-        await getOrCreateLicenseCode(session.id);
+        const code = await getOrCreateLicenseCode(session.id);
+        // Envoi du code par e-mail : sans ça, un acheteur qui ferme l'onglet
+        // n'a AUCUN moyen de récupérer son achat. Best-effort — un échec
+        // d'envoi ne doit pas invalider la licence déjà créée.
+        const to = session.customer_details?.email ?? null;
+        const locale = session.metadata?.locale === "fr" ? "fr" : "en";
+        if (code && to) await sendLicenseEmail(to, code, locale);
       }
     }
   } catch {
