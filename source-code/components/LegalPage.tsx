@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { ReactNode } from "react";
 import { Aurora } from "@/components/Aurora";
 import { Logo, Wordmark } from "@/components/Logo";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLocale } from "@/lib/i18n";
 
+/**
+ * Coquille des pages légales. Client component : les pages légales existent en
+ * anglais (langue par défaut du site) et en français, choisies via le locale.
+ * Le rendu serveur produit l'anglais, ce que voient les crawlers.
+ */
 export function LegalPage({
   title,
   updated,
@@ -12,6 +21,9 @@ export function LegalPage({
   updated?: string;
   children: ReactNode;
 }) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+
   return (
     <>
       <Aurora />
@@ -22,16 +34,22 @@ export function LegalPage({
               <Logo size={34} />
               <Wordmark className="text-lg text-platinum" />
             </Link>
-            <Link href="/" className="text-sm font-medium text-lavender hover:text-platinum">
-              ← Accueil
-            </Link>
+            <div className="flex items-center gap-3">
+              <LanguageToggle />
+              <Link href="/" className="text-sm font-medium text-lavender hover:text-platinum">
+                {fr ? "← Accueil" : "← Home"}
+              </Link>
+            </div>
           </div>
         </header>
 
         <div className="mx-auto max-w-3xl px-5 py-12">
           <h1 className="font-display text-4xl font-bold text-platinum">{title}</h1>
           {updated && (
-            <p className="mt-2 text-sm text-lavender">Dernière mise à jour : {updated}</p>
+            <p className="mt-2 text-sm text-lavender">
+              {fr ? "Dernière mise à jour : " : "Last updated: "}
+              {updated}
+            </p>
           )}
           <div className="legal mt-8 space-y-6 text-[15px] leading-relaxed text-lavender">
             {children}
