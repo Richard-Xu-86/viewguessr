@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Aurora } from "@/components/Aurora";
 import { Logo, Wordmark } from "@/components/Logo";
 import { Button } from "@/components/Buttons";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useT } from "@/lib/i18n";
 
 export default function NotFound() {
@@ -13,12 +14,13 @@ export default function NotFound() {
     <>
       <Aurora />
       <main className="relative flex min-h-dvh flex-col">
-        {/* Logo en haut */}
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-2.5 px-5 py-5">
+        {/* Logo en haut + bascule de langue */}
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2.5 px-5 py-5">
           <Link href="/" className="flex items-center gap-2.5">
             <Logo size={34} />
             <Wordmark className="text-lg text-platinum" />
           </Link>
+          <LanguageToggle />
         </div>
 
         {/* Contenu centré */}

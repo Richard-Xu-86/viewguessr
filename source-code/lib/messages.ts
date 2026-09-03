@@ -284,8 +284,16 @@ export const messages: Record<MsgKey, Entry> = {
   },
   "daily.playSolo": { fr: "Jouer en solo", en: "Play solo" },
   "daily.continueSolo": { fr: "Continuer en solo", en: "Continue in solo" },
-  "daily.copyScore": { fr: "Copier mon score", en: "Copy my score" },
+  "daily.shareScore": { fr: "Partager mon score", en: "Share my score" },
   "daily.copied": { fr: "Copié ✓", en: "Copied ✓" },
+  "daily.gridLegend": {
+    fr: "🟩 4 500+ · 🟨 3 000+ · 🟧 1 500+ · 🟥 moins",
+    en: "🟩 4,500+ · 🟨 3,000+ · 🟧 1,500+ · 🟥 under",
+  },
+  "daily.gridAria": {
+    fr: "Ta grille de résultats sur {n} manches",
+    en: "Your results grid across {n} rounds",
+  },
 
   // --- Classement quotidien -------------------------------------------------
   "lb.title": { fr: "Classement du jour", en: "Today's leaderboard" },

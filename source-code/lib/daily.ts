@@ -169,6 +169,7 @@ export function streakInfo(day: string = parisDay()): StreakInfo {
 
 // --- Partage façon Wordle ---
 
+/** Carré de couleur d'une manche selon les points (max 5 000 par manche). */
 export function emojiFor(points: number): string {
   if (points >= 4500) return "🟩";
   if (points >= 3000) return "🟨";
@@ -176,14 +177,25 @@ export function emojiFor(points: number): string {
   return "🟥";
 }
 
+/**
+ * Grille de partage : un carré par manche, dans l'ordre joué.
+ * Ex. "🟩🟩🟨🟧🟩". Spoiler-free : on montre la performance, jamais les vidéos.
+ */
+export function shareGrid(r: DailyResult): string {
+  return r.rounds.map(emojiFor).join("");
+}
+
+/**
+ * Texte copié/partagé, façon Wordle : titre + grille + lien.
+ * La grille est la ligne qui donne envie de cliquer — ne pas la retirer.
+ */
 export function shareText(r: DailyResult, locale: "fr" | "en" = "en"): string {
   const n = dailyNumber(r.day);
-  if (locale === "fr") {
-    return `Défi du jour #${n} sur ViewGuessr : ${r.score.toLocaleString(
-      "fr-FR"
-    )} pts\nview-guessr.com`;
-  }
-  return `ViewGuessr daily challenge #${n}: ${r.score.toLocaleString(
-    "en-US"
-  )} pts\nview-guessr.com`;
+  const grid = shareGrid(r);
+  const score = r.score.toLocaleString(locale === "fr" ? "fr-FR" : "en-US");
+  const title =
+    locale === "fr"
+      ? `ViewGuessr — Défi #${n} · ${score} pts`
+      : `ViewGuessr — Daily #${n} · ${score} pts`;
+  return `${title}\n${grid}\nview-guessr.com/defi`;
 }

@@ -1,9 +1,13 @@
 "use client";
 
 // i18n léger SANS dépendance ni changement de routage : la langue est un état
-// React mémorisé en localStorage et détecté depuis le navigateur au 1er passage.
-// Rendu initial toujours en FR (serveur + 1er rendu client) → pas de mismatch
-// d'hydratation ; bascule éventuelle vers EN après montage.
+// React mémorisé en localStorage.
+//
+// L'ANGLAIS est la langue par défaut pour TOUT LE MONDE. La langue du navigateur
+// n'est jamais consultée : seul un clic explicite sur le bouton FR/EN change la
+// langue, et ce choix est ensuite persistant d'une visite à l'autre.
+// Serveur et 1er rendu client sont donc toujours en anglais → aucun mismatch
+// d'hydratation ; bascule éventuelle vers le français après montage.
 
 import {
   createContext,
@@ -31,28 +35,20 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
 
   useEffect(() => {
-    // 1) Choix explicite de l'utilisateur (toggle) → prioritaire et persistant.
+    // SEULE source de français : un choix explicite fait via le bouton FR/EN lors
+    // d'une visite précédente. Sans ce choix, on reste en anglais — y compris pour
+    // un navigateur configuré en français.
     try {
       const saved = window.localStorage.getItem(KEY);
-      if (saved === "fr" || saved === "en") {
-        setLocaleState(saved);
-        document.documentElement.lang = saved;
+      if (saved === "fr") {
+        setLocaleState("fr");
+        document.documentElement.lang = "fr";
         return;
       }
     } catch {
       /* ignore */
     }
-    // 2) Détection auto : FRANÇAIS uniquement pour les visiteurs francophones,
-    //    ANGLAIS par défaut pour tout le monde d'autre (langue internationale).
-    //    On regarde la langue préférée + toute la liste des langues du navigateur.
-    const prefs =
-      typeof navigator !== "undefined"
-        ? [navigator.language, ...(navigator.languages || [])]
-        : [];
-    const primary = (prefs[0] || "").toLowerCase();
-    const detected: Locale = primary.startsWith("fr") ? "fr" : "en";
-    setLocaleState(detected);
-    document.documentElement.lang = detected;
+    document.documentElement.lang = "en";
   }, []);
 
   const setLocale = useCallback((l: Locale) => {

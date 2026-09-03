@@ -28,6 +28,7 @@ import {
   liveStreak,
   getFreezes,
   shareText,
+  shareGrid,
   type DailyResult,
 } from "@/lib/daily";
 import { getName } from "@/lib/profile";
@@ -293,21 +294,51 @@ function Shell({
   );
 }
 
-/** Grille d'emojis + score + bouton copier (partage façon Wordle). */
+/** Grille d'emojis + score + bouton partager (partage façon Wordle). */
 function ShareBlock({ result }: { result: DailyResult }) {
   const t = useT();
   const { locale } = useLocale();
   const [copied, setCopied] = useState(false);
-  function copy() {
-    navigator.clipboard?.writeText(shareText(result, locale)).then(() => {
+  const grid = shareGrid(result);
+
+  async function share() {
+    const text = shareText(result, locale);
+    // Partage natif (mobile) si dispo — sinon copie dans le presse-papier.
+    // Même stratégie que le lien d'invitation multijoueur.
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: "ViewGuessr", text });
+        return;
+      } catch {
+        /* partage annulé → on tente la copie */
+      }
+    }
+    navigator.clipboard?.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     });
   }
+
   return (
-    <Button onClick={copy} variant="glass" className="w-full py-3.5">
-      {copied ? t("daily.copied") : t("daily.copyScore")}
-    </Button>
+    <div className="space-y-3">
+      {/* Aperçu de ce qui sera partagé : la grille est le crochet visuel. */}
+      <div className="rounded-2xl border-2 border-platinum/15 bg-[#FAF7F0] px-4 py-3 text-center">
+        <div
+          className="font-display text-2xl leading-none tracking-[0.15em]"
+          role="img"
+          aria-label={t("daily.gridAria", { n: result.rounds.length })}
+        >
+          {grid}
+        </div>
+        <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-lavender">
+          {t("daily.gridLegend")}
+        </div>
+      </div>
+
+      <Button onClick={share} variant="glass" className="w-full py-3.5">
+        {copied ? t("daily.copied") : t("daily.shareScore")}
+      </Button>
+    </div>
   );
 }
 
