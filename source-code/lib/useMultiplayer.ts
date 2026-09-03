@@ -9,6 +9,7 @@ import { recordPlay } from "./limits";
 import { serverAllowPlay, serverCheckPlay } from "./serverLimits";
 import { setActiveGame, clearActiveGame, type ActiveGame } from "./profile";
 import { containsBannedWord, censorText } from "./moderation";
+import { useT } from "./i18n";
 
 export type Phase =
   | "idle"
@@ -48,7 +49,7 @@ async function fetchVideos(
   const res = await fetch(`/api/videos?${params.toString()}`);
   const data = await res.json();
   if (!res.ok || !data.videos?.length) {
-    throw new Error(data.error ?? "Aucune vidéo disponible.");
+    throw new Error(data.error ?? "No videos available.");
   }
   return data.videos as YTVideo[];
 }
@@ -94,6 +95,8 @@ export function useMultiplayer() {
 
   // Délai (ms) au-delà duquel l'hôte avance la manche même si tous ne sont pas prêts.
   const ROUND_RESULT_TIMEOUT_MS = 30_000;
+
+  const t = useT();
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [game, setGame] = useState<MPGame | null>(null);
@@ -211,15 +214,13 @@ export function useMultiplayer() {
       mode: GameMode = "classic"
     ) => {
       if (containsBannedWord(playerName)) {
-        setErrorMsg("Ce pseudo n'est pas autorisé. Choisis-en un autre.");
+        setErrorMsg(t("mp.bannedName"));
         setPhase("error");
         return;
       }
       // Le mode « Plus ou moins » est un avantage de l'accès à vie (côté hôte).
       if (mode === "hl" && !isPro()) {
-        setErrorMsg(
-          "Le mode Plus ou moins est réservé à l'accès à vie. Débloque-le pour 5,99 $ CA une seule fois."
-        );
+        setErrorMsg(t("mp.err.hlPro"));
         setPhase("error");
         return;
       }
@@ -229,9 +230,7 @@ export function useMultiplayer() {
       // On NE décompte PAS à la création du lobby : on vérifie seulement (peek) qu'il
       // reste une partie multi disponible aujourd'hui.
       if (!(await serverCheckPlay("mp"))) {
-        setErrorMsg(
-          "Tu as déjà joué ta partie multijoueur gratuite aujourd'hui. Reviens demain, ou passe à l'accès à vie."
-        );
+        setErrorMsg(t("mp.err.freeUsed"));
         setPhase("error");
         return;
       }
@@ -252,7 +251,7 @@ export function useMultiplayer() {
         await SupabaseService.joinGame(
           g.id,
           playerId,
-          decoratedName("Hôte"),
+          decoratedName(t("mp.host")),
           String(cap)
         );
         setActiveGame({ gameId: g.id, code, playerId });
@@ -260,17 +259,17 @@ export function useMultiplayer() {
         setPhase("lobby");
         // Décompte volontairement DIFFÉRÉ au lancement de la partie (voir l'effet plus haut).
       } catch (e) {
-        setErrorMsg(e instanceof Error ? e.message : "Erreur");
+        setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
         setPhase("error");
       }
     },
-    [playerId, playerName, playerEmoji]
+    [playerId, playerName, playerEmoji, t]
   );
 
   const joinGame = useCallback(
     async (code: string) => {
       if (containsBannedWord(playerName)) {
-        setErrorMsg("Ce pseudo n'est pas autorisé. Choisis-en un autre.");
+        setErrorMsg(t("mp.bannedName"));
         setPhase("error");
         return;
       }
@@ -280,7 +279,7 @@ export function useMultiplayer() {
       try {
         const g = await SupabaseService.findGame(code);
         if (g.status === "finished") {
-          setErrorMsg("Cette partie est déjà terminée.");
+          setErrorMsg(t("mp.err.finished"));
           setPhase("error");
           return;
         }
@@ -309,9 +308,7 @@ export function useMultiplayer() {
         // Hôte NON-Pro : on vérifie (peek) le quota gratuit SANS le consommer.
         // Hôte Pro : aucune limite, on saute la vérification.
         if (!hostIsPro && !(await serverCheckPlay("mp"))) {
-          setErrorMsg(
-            "Tu as déjà joué ta partie multijoueur gratuite aujourd'hui. Reviens demain, ou passe à l'accès à vie."
-          );
+          setErrorMsg(t("mp.err.freeUsed"));
           setPhase("error");
           return;
         }
@@ -325,14 +322,14 @@ export function useMultiplayer() {
             ? hostCap
             : allowed;
         if (activeCount >= cap) {
-          setErrorMsg(`Cette partie est complète (${cap} joueurs maximum).`);
+          setErrorMsg(t("mp.err.full", { n: cap }));
           setPhase("error");
           return;
         }
         await SupabaseService.joinGame(
           g.id,
           playerId,
-          decoratedName("Joueur"),
+          decoratedName(t("mp.playerFallback")),
           playerEmoji
         );
         setActiveGame({ gameId: g.id, code, playerId });
@@ -341,11 +338,11 @@ export function useMultiplayer() {
         setPhase(g.status === "lobby" ? "lobby" : "guessing");
         // Décompte différé : il se fait à l'entrée en jeu (effet plus haut), pas ici.
       } catch (e) {
-        setErrorMsg(e instanceof Error ? e.message : "Erreur");
+        setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
         setPhase("error");
       }
     },
-    [playerId, playerName, playerEmoji]
+    [playerId, playerName, playerEmoji, t]
   );
 
   // Reprise d'une partie quittée/rafraîchie : on réutilise l'identité stockée.
@@ -357,7 +354,7 @@ export function useMultiplayer() {
       const g = await SupabaseService.getGame(active.gameId);
       if (!g || g.status === "finished") {
         clearActiveGame();
-        setErrorMsg("Ta partie précédente est terminée ou introuvable.");
+        setErrorMsg(t("mp.err.resume"));
         setPhase("error");
         return;
       }
@@ -366,10 +363,10 @@ export function useMultiplayer() {
       setGame(g);
       setPhase(g.status === "lobby" ? "lobby" : "guessing");
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "Erreur");
+      setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
       setPhase("error");
     }
-  }, []);
+  }, [t]);
 
   const startGame = useCallback(async () => {
     if (!game || !isHost) return;
@@ -407,7 +404,7 @@ export function useMultiplayer() {
       setGame({ ...game, videos, status: "lobby", current_round: 0 });
       setPhase("lobby");
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : "Erreur");
+      setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
       setPhase("error");
     } finally {
       setAdvancing(false);
@@ -439,7 +436,7 @@ export function useMultiplayer() {
     } catch (e) {
       // Échec réseau : on autorise une nouvelle tentative pour cette manche.
       submittedRoundRef.current = 0;
-      setErrorMsg(e instanceof Error ? e.message : "Erreur");
+      setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
       setPhase("error");
     }
   }, [game, currentVideo, guess, playerId, myScore, phase]);
@@ -474,7 +471,7 @@ export function useMultiplayer() {
         await SupabaseService.updateScore(playerId, myScore + pts);
       } catch (e) {
         submittedRoundRef.current = 0;
-        setErrorMsg(e instanceof Error ? e.message : "Erreur");
+        setErrorMsg(e instanceof Error ? e.message : t("mp.err.generic"));
         setPhase("error");
       }
     },
@@ -584,12 +581,12 @@ export function useMultiplayer() {
       if (seededRef.current) {
         for (const [id, name] of prev) {
           if (!freshActiveIds.has(id) && id !== playerId) {
-            flashNotice(`${name} a quitté la partie`);
+            flashNotice(t("mp.left", { name }));
           }
         }
         for (const p of freshActive) {
           if (!prev.has(p.id) && p.id !== playerId) {
-            flashNotice(`${p.name} a rejoint la partie`);
+            flashNotice(t("mp.joined", { name: p.name }));
           }
         }
       }

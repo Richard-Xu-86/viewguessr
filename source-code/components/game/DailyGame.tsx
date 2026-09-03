@@ -76,7 +76,7 @@ export function DailyGame() {
       const res = await fetch("/api/daily", { cache: "no-store" });
       const data = await res.json();
       if (!res.ok || !data.videos?.length) {
-        throw new Error(data.error ?? "Défi indisponible.");
+        throw new Error(data.error ?? "Daily challenge unavailable.");
       }
       setVideos(data.videos);
       setDay(data.day ?? today);
@@ -86,7 +86,7 @@ export function DailyGame() {
       setStreak(liveStreak(today));
       setStatus("confirm");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur de chargement.");
+      setError(e instanceof Error ? e.message : "Loading error.");
       setStatus("error");
     }
   }, []);
@@ -296,9 +296,10 @@ function Shell({
 /** Grille d'emojis + score + bouton copier (partage façon Wordle). */
 function ShareBlock({ result }: { result: DailyResult }) {
   const t = useT();
+  const { locale } = useLocale();
   const [copied, setCopied] = useState(false);
   function copy() {
-    navigator.clipboard?.writeText(shareText(result)).then(() => {
+    navigator.clipboard?.writeText(shareText(result, locale)).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     });

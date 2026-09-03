@@ -33,7 +33,7 @@ async function fetchBatch(cat: string, lang: string): Promise<YTVideo[]> {
   const res = await fetch(`/api/videos?${params.toString()}`);
   const data = await res.json();
   if (!res.ok || !data.videos?.length) {
-    throw new Error(data.error ?? "Aucune vidéo disponible.");
+    throw new Error(data.error ?? "No videos available.");
   }
   return data.videos as YTVideo[];
 }
@@ -177,14 +177,14 @@ export function HigherLower() {
       seenRef.current = new Set();
       const l = takeNext();
       const r = takeNext();
-      if (!l || !r) throw new Error("Pas assez de vidéos disponibles.");
+      if (!l || !r) throw new Error("Not enough videos available.");
       setLeft(l);
       setRight(r);
       setStreak(0);
       setNewRecord(false);
       setStatus("playing");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur de chargement.");
+      setError(e instanceof Error ? e.message : "Loading error.");
       setStatus("error");
     }
   }

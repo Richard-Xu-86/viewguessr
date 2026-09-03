@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 // Mode Blitz retiré : page non indexée (redirige vers l'accueil).
 export const metadata: Metadata = {
-  title: "Indisponible",
+  title: "Unavailable",
   robots: { index: false, follow: false },
 };
 

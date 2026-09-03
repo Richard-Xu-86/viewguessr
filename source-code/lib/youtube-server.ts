@@ -183,7 +183,7 @@ export async function fetchVideos(
   langKey: string | null = null
 ): Promise<YTVideo[]> {
   const apiKey = process.env.YOUTUBE_API_KEY;
-  if (!apiKey) throw new Error("YOUTUBE_API_KEY manquante côté serveur.");
+  if (!apiKey) throw new Error("YOUTUBE_API_KEY is missing on the server.");
 
   let pool = await getPool(apiKey, categoryId, langKey);
 
@@ -197,7 +197,7 @@ export async function fetchVideos(
   if (pool.length < count && (categoryId || langKey)) {
     pool = await getPool(apiKey, null, null);
   }
-  if (pool.length === 0) throw new Error("Aucune vidéo disponible.");
+  if (pool.length === 0) throw new Error("No videos available.");
 
   return shuffle(pool).slice(0, count);
 }

@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { groupedViews } from "@/lib/format";
+import { useLocale, groupedViewsL } from "@/lib/i18n";
 
 // Compteur animé (count-up) pour révéler le nombre de vues / un score.
+// Sans `format`, le groupage des milliers suit la langue active (EN par défaut).
 export function CountUp({
   to,
   duration = 1100,
   className = "",
-  format = groupedViews,
+  format,
 }: {
   to: number;
   duration?: number;
   className?: string;
   format?: (n: number) => string;
 }) {
+  const { locale } = useLocale();
+  const fmt = format ?? ((n: number) => groupedViewsL(n, locale));
   const [value, setValue] = useState(0);
   const raf = useRef<number>();
 
@@ -33,5 +36,5 @@ export function CountUp({
     };
   }, [to, duration]);
 
-  return <span className={className}>{format(value)}</span>;
+  return <span className={className}>{fmt(value)}</span>;
 }

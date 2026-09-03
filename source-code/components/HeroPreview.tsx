@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { YTVideo } from "@/lib/types";
 import { TiltCard } from "./TiltCard";
+import { useT } from "@/lib/i18n";
 
 // Aperçu façon "vraie manche" dans le hero : miniature mystère + barre de réponse.
 // DA « print » : bordure encre + ombre dure, sticker incliné, zéro flou.
 export function HeroPreview() {
+  const t = useT();
   const [video, setVideo] = useState<YTVideo | null>(null);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export function HeroPreview() {
     <div className="relative [perspective:1200px]">
       {/* Sticker au-dessus de la carte */}
       <span className="sticker absolute -top-3 left-6 z-10 -rotate-3 bg-white">
-        Manche 1/5
+        {t("hero.roundBadge")}
       </span>
 
       <TiltCard className="rounded-2xl" max={7}>
@@ -34,10 +36,10 @@ export function HeroPreview() {
           <div className="mb-3 flex items-center justify-between px-1">
             <div className="flex items-center gap-2 text-sm font-bold text-platinum">
               <span className="h-2.5 w-2.5 animate-pulseGlow rounded-full bg-strawberry" />
-              En direct
+              {t("hero.live")}
             </div>
             <span className="rounded-md border border-platinum/20 bg-[#FAF7F0] px-2.5 py-1 text-xs font-bold text-platinum">
-              Tendances YouTube
+              {t("hero.trending")}
             </span>
           </div>
 
@@ -59,7 +61,7 @@ export function HeroPreview() {
                 ?
               </span>
               <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-white/70">
-                combien de vues ?
+                {t("hero.howMany")}
               </span>
             </div>
           </div>
@@ -67,11 +69,11 @@ export function HeroPreview() {
           {/* Barre de réponse (statique, décorative) */}
           <div className="mt-4 rounded-xl border-2 border-platinum/15 bg-[#FAF7F0] p-4">
             <div className="mb-2 flex items-center justify-between text-xs font-bold text-lavender">
-              <span>1 k</span>
+              <span>{t("hero.scaleMin")}</span>
               <span className="font-display text-base font-bold text-platinum">
-                1,2 M
+                {t("hero.scaleMid")}
               </span>
-              <span>1 Md</span>
+              <span>{t("hero.scaleMax")}</span>
             </div>
             <div className="relative h-2 rounded-full border border-platinum/20 bg-white">
               <div

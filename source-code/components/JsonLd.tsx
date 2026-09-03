@@ -17,9 +17,9 @@ export function JsonLd() {
         name: "ViewGuessr",
         alternateName: ["View Guessr", "viewguessr", "view guessr"],
         url: SITE_URL,
-        inLanguage: "fr-FR",
+        inLanguage: "en-US",
         description:
-          "Jeu gratuit où l'on devine le nombre de vues de vraies vidéos YouTube tendance.",
+          "Free game where you guess the view count of real trending YouTube videos.",
         publisher: { "@id": `${SITE_URL}/#publisher` },
       },
       {
@@ -44,9 +44,9 @@ export function JsonLd() {
         alternateName: ["View Guessr", "view guessr"],
         url: SITE_URL,
         description:
-          "ViewGuessr est un jeu français où l'on devine le nombre de vues de vraies vidéos YouTube. Modes solo et multijoueur en ligne.",
+          "ViewGuessr is a game where you guess the view count of real YouTube videos. Solo and online multiplayer modes.",
         image: `${SITE_URL}/logo.png`,
-        inLanguage: ["fr", "en"],
+        inLanguage: ["en", "fr"],
         applicationCategory: "GameApplication",
         genre: ["Guessing game", "Party game", "Trivia"],
         operatingSystem: "Web",
@@ -61,11 +61,11 @@ export function JsonLd() {
         publisher: { "@id": `${SITE_URL}/#publisher` },
         offers: {
           "@type": "Offer",
-          name: "Accès à vie",
+          name: "Lifetime access",
           price: "5.99",
           priceCurrency: "CAD",
           availability: "https://schema.org/InStock",
-          category: "Paiement unique",
+          category: "One-time payment",
           url: `${SITE_URL}/pro`,
         },
       },

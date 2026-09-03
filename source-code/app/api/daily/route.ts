@@ -39,7 +39,7 @@ export async function GET() {
       return NextResponse.json({ day, videos, shared: false });
     } catch (e) {
       return NextResponse.json(
-        { error: e instanceof Error ? e.message : "Défi indisponible." },
+        { error: e instanceof Error ? e.message : "Daily challenge unavailable." },
         { status: 502 }
       );
     }
@@ -82,7 +82,7 @@ export async function GET() {
       const videos = await fetchVideos(DAILY_ROUNDS);
       return NextResponse.json({ day, videos, shared: false });
     } catch {
-      return NextResponse.json({ error: "Défi indisponible." }, { status: 502 });
+      return NextResponse.json({ error: "Daily challenge unavailable." }, { status: 502 });
     }
   }
 }

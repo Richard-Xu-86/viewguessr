@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Multijoueur",
+  title: "Multiplayer",
   description:
-    "Affronte tes amis en temps réel sur ViewGuessr : crée ou rejoins une partie avec un code, devinez ensemble les vues de vraies vidéos YouTube et suivez le classement en direct.",
+    "Take on your friends in real time on ViewGuessr: create or join a game with a code, guess the views of real YouTube videos together and follow the live leaderboard.",
   alternates: { canonical: "/multiplayer" },
   openGraph: {
-    title: "Multijoueur · ViewGuessr",
+    title: "Multiplayer · ViewGuessr",
     description:
-      "Crée une partie, partage le code et affronte tes amis en temps réel sur ViewGuessr.",
+      "Create a game, share the code and take on your friends in real time on ViewGuessr.",
     url: "/multiplayer",
   },
 };

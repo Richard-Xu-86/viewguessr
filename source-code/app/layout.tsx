@@ -11,11 +11,11 @@ const SITE_URL = "https://view-guessr.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ViewGuessr — Devine les vues des vidéos YouTube",
+    default: "ViewGuessr — Guess the YouTube Views Game",
     template: "%s · ViewGuessr",
   },
   description:
-    "ViewGuessr, le jeu gratuit où tu devines le nombre de vues de vraies vidéos YouTube tendance. Joue en solo ou en multijoueur contre tes amis avec un code de partie. Sans inscription, en français.",
+    "ViewGuessr is the free game where you guess the view count of real trending YouTube videos. Play solo, or take on your friends in multiplayer with a game code. No sign-up needed.",
   applicationName: "ViewGuessr",
   authors: [{ name: PUBLISHER.tradingName }],
   creator: PUBLISHER.tradingName,
@@ -23,45 +23,46 @@ export const metadata: Metadata = {
   category: "game",
   keywords: [
     "ViewGuessr",
-    "deviner les vues YouTube",
-    "jeu vues YouTube",
-    "jeu YouTube gratuit",
-    "quiz vidéos YouTube",
-    "deviner le nombre de vues",
-    "jeu vidéo français",
-    "jeu multijoueur en ligne",
-    "vidéos tendance YouTube",
+    "guess the YouTube views",
+    "YouTube views game",
+    "free YouTube game",
+    "YouTube video quiz",
+    "guess the view count",
+    "online multiplayer game",
+    "trending YouTube videos",
+    "guessing game no sign up",
   ],
   alternates: {
     canonical: "/",
     languages: {
-      "fr-FR": "/",
       "en-US": "/en",
+      "fr-FR": "/",
       "x-default": "/",
     },
   },
   openGraph: {
     type: "website",
-    locale: "fr_FR",
+    locale: "en_US",
+    alternateLocale: ["fr_FR"],
     url: SITE_URL,
     siteName: "ViewGuessr",
-    title: "ViewGuessr Devine les vues des vidéos YouTube",
+    title: "ViewGuessr — Guess the YouTube Views Game",
     description:
-      "Le jeu gratuit où tu devines le nombre de vues de vraies vidéos YouTube. Solo et multijoueur. Affronte tes amis avec un code de partie.",
+      "The free game where you guess the view count of real trending YouTube videos. Solo and multiplayer. Take on your friends with a game code.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "ViewGuessr Devine les vues des vidéos YouTube",
+        alt: "ViewGuessr — Guess the YouTube Views Game",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ViewGuessr Devine les vues des vidéos YouTube",
+    title: "ViewGuessr — Guess the YouTube Views Game",
     description:
-      "Devine le nombre de vues de vraies vidéos YouTube. Solo et multijoueur, en français et sans inscription.",
+      "Guess the view count of real trending YouTube videos. Solo and multiplayer, no sign-up.",
     images: ["/twitter-image"],
   },
   robots: {

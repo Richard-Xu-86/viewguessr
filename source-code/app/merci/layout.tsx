@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Merci",
-  description: "Merci pour ton achat ton accès à vie ViewGuessr est activé.",
+  title: "Thank you",
+  description: "Thanks for your purchase — your ViewGuessr lifetime access is active.",
   alternates: { canonical: "/merci" },
   robots: { index: false, follow: false },
 };

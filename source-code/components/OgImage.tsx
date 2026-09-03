@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 /** Réglages partagés par opengraph-image et twitter-image. */
-export const ogAlt = "ViewGuessr Devine les vues des vidéos YouTube";
+export const ogAlt = "ViewGuessr — Guess the YouTube Views Game";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 

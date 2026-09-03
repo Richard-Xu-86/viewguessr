@@ -499,6 +499,187 @@ export const messages: Record<MsgKey, Entry> = {
     en: "This nickname isn't allowed. Pick another one.",
   },
 
+  // Multijoueur — écran d'accueil / configuration
+  "mp.notConfigured": {
+    fr: "Le multijoueur n'est pas configuré (variables Supabase manquantes).",
+    en: "Multiplayer isn't configured (Supabase variables are missing).",
+  },
+  "mp.leave": { fr: "Quitter", en: "Leave" },
+  "mp.leaveConfirm": {
+    fr: "Quitter la partie en cours ?",
+    en: "Leave the game in progress?",
+  },
+  "mp.connecting": { fr: "Connexion à la partie…", en: "Connecting to the game…" },
+  "mp.hero1": { fr: "Multi", en: "Multi" },
+  "mp.hero2": { fr: "joueur", en: "player" },
+  "mp.heroSub": {
+    fr: "Affronte tes amis sur les mêmes vidéos, en temps réel.",
+    en: "Take on your friends on the same videos, in real time.",
+  },
+  "mp.gameInProgress": { fr: "Partie en cours ·", en: "Game in progress ·" },
+  "mp.resume": { fr: "Reprendre", en: "Resume" },
+  "mp.discard": { fr: "Abandonner", en: "Discard" },
+  "mp.namePlaceholder": { fr: "Ton nom de joueur", en: "Your player name" },
+  "mp.joinWithCode": { fr: "Rejoindre avec un code", en: "Join with a code" },
+  "mp.limitTitle": { fr: "Limite du jour atteinte", en: "Daily limit reached" },
+  "mp.limitMsg": {
+    fr: "Tu as déjà créé ta partie multijoueur gratuite des dernières 24 h. Tu peux toujours rejoindre la partie d'un ami avec un code — c'est illimité. Pour héberger tes propres parties sans limite, passe à l'accès à vie.",
+    en: "You've already created your free multiplayer game in the last 24 h. You can still join a friend's game with a code — that's unlimited. To host your own games without limits, go lifetime.",
+  },
+  "mp.goLifetime": { fr: "Passer à vie · 5,99 $ CA", en: "Go lifetime · CA$5.99" },
+  "mp.modeClassicDesc": {
+    fr: "Devine les vues au curseur",
+    en: "Guess the views with the slider",
+  },
+  "mp.modeHlDesc": {
+    fr: "Deux vidéos, laquelle fait plus ?",
+    en: "Two videos — which has more?",
+  },
+  "mp.modeHlLocked": { fr: "Plus ou moins 🔒", en: "Higher or Lower 🔒" },
+  "mp.modeHlUnlock": {
+    fr: "Réservé à l'accès à vie → le débloquer",
+    en: "Lifetime access only → unlock it",
+  },
+  "mp.roundsCount": { fr: "Nombre de manches", en: "Number of rounds" },
+  "mp.playersCount": { fr: "Nombre de joueurs", en: "Number of players" },
+  "mp.fewerPlayers": { fr: "Moins de joueurs", en: "Fewer players" },
+  "mp.morePlayers": { fr: "Plus de joueurs", en: "More players" },
+  "mp.playersUnit": { fr: "joueurs", en: "players" },
+  "mp.upTo3": {
+    fr: "Jusqu'à 3 joueurs · 10 avec l'accès à vie",
+    en: "Up to 3 players · 10 with lifetime access",
+  },
+  "mp.upTo10": { fr: "Jusqu'à 10 joueurs", en: "Up to 10 players" },
+  "mp.createGameBtn": { fr: "Créer la partie", en: "Create the game" },
+  "mp.invited": {
+    fr: "🎉 Tu as été invité ! Entre ton pseudo plus haut pour rejoindre.",
+    en: "🎉 You've been invited! Enter your nickname above to join.",
+  },
+
+  // Multijoueur — salon
+  "mp.hlSticker": { fr: "Mode Plus ou moins", en: "Higher or Lower mode" },
+  "mp.copyCode": { fr: "Copier le code", en: "Copy the code" },
+  "mp.codeCopied": { fr: "Copié ✓", en: "Copied ✓" },
+  "mp.inviteLink": { fr: "🔗 Lien d'invitation", en: "🔗 Invite link" },
+  "mp.linkCopied": { fr: "Lien copié ✓", en: "Link copied ✓" },
+  "mp.shareHint": {
+    fr: "Partage le code, ou le lien : tes amis rejoignent en un clic",
+    en: "Share the code, or the link — your friends join in one click",
+  },
+  "mp.shareText": {
+    fr: "Rejoins ma partie ViewGuessr 👀",
+    en: "Join my ViewGuessr game 👀",
+  },
+  "mp.playersOf": { fr: "Joueurs ({n}/{max})", en: "Players ({n}/{max})" },
+  "mp.roomOpen": { fr: "Salon ouvert", en: "Room open" },
+  "mp.host": { fr: "Hôte", en: "Host" },
+  "mp.waitingPlayer": {
+    fr: "En attente d'un joueur…",
+    en: "Waiting for a player…",
+  },
+  "mp.needTwoLong": {
+    fr: "Il faut au moins 2 joueurs pour lancer la partie.",
+    en: "You need at least 2 players to start the game.",
+  },
+  "mp.waitingHostStart": {
+    fr: "En attente du lancement par l'hôte…",
+    en: "Waiting for the host to start…",
+  },
+
+  // Multijoueur — discussion
+  "mp.lobbyChat": { fr: "Discussion du salon", en: "Room chat" },
+  "mp.sayHi": {
+    fr: "Dis bonjour à tes adversaires 👋",
+    en: "Say hi to your opponents 👋",
+  },
+  "mp.send": { fr: "Envoyer", en: "Send" },
+  "mp.chat": { fr: "Discussion", en: "Chat" },
+  "mp.closeChat": { fr: "Fermer le chat", en: "Close chat" },
+  "mp.noMessages": { fr: "Aucun message pour l'instant.", en: "No messages yet." },
+
+  // Multijoueur — manche en cours
+  "mp.nextRoundLoader": { fr: "Manche suivante…", en: "Next round…" },
+  "mp.hlQuestion": {
+    fr: "La vidéo de droite fait-elle plus ou moins de vues que celle de gauche ? +1 000 pts par bonne réponse.",
+    en: "Does the right video have more or fewer views than the left one? +1,000 pts per correct answer.",
+  },
+  "mp.answerSent": { fr: "Réponse envoyée !", en: "Answer sent!" },
+  "mp.waitingAll": {
+    fr: "On attend que tout le monde réponde…",
+    en: "Waiting for everyone to answer…",
+  },
+  "mp.answered": { fr: "A répondu", en: "Answered" },
+  "mp.thinking": { fr: "Réfléchit…", en: "Thinking…" },
+  "mp.resultsTogether": {
+    fr: "Les résultats s'afficheront en même temps pour tout le monde",
+    en: "Results will appear at the same time for everyone",
+  },
+
+  // Multijoueur — révélation de manche
+  "mp.revealing": { fr: "Révélation…", en: "Revealing…" },
+  "mp.itWas": { fr: "C'était", en: "It was" },
+  "mp.hlHigher": { fr: "▲ PLUS", en: "▲ HIGHER" },
+  "mp.hlLower": { fr: "▼ MOINS", en: "▼ LOWER" },
+  "mp.hlVersus": { fr: "(contre {v} vues)", en: "(vs {v} views)" },
+  "mp.hlCorrect": { fr: "+1 000 pts · Bonne réponse !", en: "+1,000 pts · Correct!" },
+  "mp.hlWrong": { fr: "+0 pt · Raté…", en: "+0 pts · Missed…" },
+  "mp.roundResults": { fr: "Résultats de la manche", en: "Round results" },
+  "mp.hlHigherShort": { fr: "▲ Plus", en: "▲ Higher" },
+  "mp.hlLowerShort": { fr: "▼ Moins", en: "▼ Lower" },
+  "mp.playerFallback": { fr: "Joueur", en: "Player" },
+  "mp.aPlayer": { fr: "Un joueur", en: "A player" },
+  "mp.waitingReady": {
+    fr: "En attente des autres… {n}/{total} prêts",
+    en: "Waiting for the others… {n}/{total} ready",
+  },
+  "mp.imReady": { fr: "Je suis prêt ({n}/{total})", en: "I'm ready ({n}/{total})" },
+  "mp.everyoneReady": {
+    fr: "Tout le monde est prêt c'est parti !",
+    en: "Everyone's ready — let's go!",
+  },
+
+  // Multijoueur — erreurs
+  "mp.err.hlPro": {
+    fr: "Le mode Plus ou moins est réservé à l'accès à vie. Débloque-le pour 5,99 $ CA une seule fois.",
+    en: "Higher or Lower is lifetime-access only. Unlock it for CA$5.99, one time.",
+  },
+  "mp.err.freeUsed": {
+    fr: "Tu as déjà joué ta partie multijoueur gratuite aujourd'hui. Reviens demain, ou passe à l'accès à vie.",
+    en: "You've already played your free multiplayer game today. Come back tomorrow, or go lifetime.",
+  },
+  "mp.err.finished": {
+    fr: "Cette partie est déjà terminée.",
+    en: "This game has already ended.",
+  },
+  "mp.err.full": {
+    fr: "Cette partie est complète ({n} joueurs maximum).",
+    en: "This game is full ({n} players maximum).",
+  },
+  "mp.err.resume": {
+    fr: "Ta partie précédente est terminée ou introuvable.",
+    en: "Your previous game has ended or can't be found.",
+  },
+  "mp.err.generic": { fr: "Erreur", en: "Error" },
+
+  // --- Aperçu du hero (accueil) --------------------------------------------
+  "hero.roundBadge": { fr: "Manche 1/5", en: "Round 1/5" },
+  "hero.live": { fr: "En direct", en: "Live" },
+  "hero.trending": { fr: "Tendances YouTube", en: "YouTube trending" },
+  "hero.howMany": { fr: "combien de vues ?", en: "how many views?" },
+  "hero.scaleMin": { fr: "1 k", en: "1K" },
+  "hero.scaleMid": { fr: "1,2 M", en: "1.2M" },
+  "hero.scaleMax": { fr: "1 Md", en: "1B" },
+
+  // --- Page 404 -------------------------------------------------------------
+  "nf.badge": { fr: "0 vue", en: "0 views" },
+  "nf.title1": { fr: "Cette page n'a fait", en: "This page got" },
+  "nf.title2": { fr: "aucune vue", en: "zero views" },
+  "nf.body": {
+    fr: "La vidéo que tu cherches est introuvable — elle a peut-être été supprimée, ou le lien est cassé. Mais il reste plein de vues à deviner.",
+    en: "The video you're looking for can't be found — it may have been removed, or the link is broken. But there are plenty of views left to guess.",
+  },
+  "nf.playSolo": { fr: "▶ Jouer en solo", en: "▶ Play solo" },
+
   // --- Page de remerciement (/merci) ---------------------------------------
   "merci.checking": { fr: "Vérification du paiement…", en: "Verifying your payment…" },
   "merci.title": { fr: "Merci ! Tu as l'accès", en: "Thank you! You have" },

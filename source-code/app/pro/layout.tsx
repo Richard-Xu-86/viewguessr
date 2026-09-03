@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Accès à vie",
+  title: "Lifetime access",
   description:
-    "Débloque ViewGuessr en accès à vie pour 5,99 $ CA en paiement unique, sans abonnement : parties solo illimitées et multijoueur sans limite (jusqu'à 10 joueurs). Soutiens un créateur indépendant.",
+    "Unlock ViewGuessr for life with a one-time CA$5.99 payment, no subscription: unlimited solo games and unlimited multiplayer (up to 10 players). Support an independent creator.",
   alternates: { canonical: "/pro" },
   openGraph: {
-    title: "Accès à vie · ViewGuessr",
+    title: "Lifetime access · ViewGuessr",
     description:
-      "5,99 $ CA en paiement unique, sans abonnement : jeu illimité, multijoueur jusqu'à 10 joueurs.",
+      "CA$5.99, one-time payment, no subscription: unlimited play, multiplayer up to 10 players.",
     url: "/pro",
   },
 };

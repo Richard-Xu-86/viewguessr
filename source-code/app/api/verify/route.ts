@@ -18,12 +18,12 @@ function getStripe(): Stripe | null {
 export async function GET(req: NextRequest) {
   const stripe = getStripe();
   if (!stripe) {
-    return NextResponse.json({ error: "Stripe non configuré." }, { status: 500 });
+    return NextResponse.json({ error: "Stripe is not configured." }, { status: 500 });
   }
   const id = new URL(req.url).searchParams.get("session_id");
   if (!id) {
     return NextResponse.json(
-      { paid: false, error: "session_id manquant" },
+      { paid: false, error: "session_id is missing" },
       { status: 400 }
     );
   }
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
       code,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erreur Stripe";
+    const message = err instanceof Error ? err.message : "Stripe error";
     return NextResponse.json({ paid: false, error: message }, { status: 500 });
   }
 }

@@ -86,7 +86,7 @@ export const SupabaseService = {
       body: JSON.stringify(payload),
       prefer: "return=representation",
     });
-    if (!rows?.[0]) throw new Error("Création de partie impossible.");
+    if (!rows?.[0]) throw new Error("Could not create the game.");
     return rows[0];
   },
 
@@ -94,13 +94,13 @@ export const SupabaseService = {
     const rows = await req<MPGame[]>(
       `games?code=eq.${code.toUpperCase()}&select=*&order=created_at.desc&limit=1`
     );
-    if (!rows?.[0]) throw new Error("Partie introuvable. Vérifie le code !");
+    if (!rows?.[0]) throw new Error("Game not found. Check the code!");
     return rows[0];
   },
 
   async getGame(id: string): Promise<MPGame> {
     const rows = await req<MPGame[]>(`games?id=eq.${id}&select=*`);
-    if (!rows?.[0]) throw new Error("Partie introuvable.");
+    if (!rows?.[0]) throw new Error("Game not found.");
     return rows[0];
   },
 
@@ -157,7 +157,7 @@ export const SupabaseService = {
       body: JSON.stringify(payload),
       prefer: "resolution=merge-duplicates,return=representation",
     });
-    if (!rows?.[0]) throw new Error("Impossible de rejoindre.");
+    if (!rows?.[0]) throw new Error("Could not join the game.");
     return rows[0];
   },
 

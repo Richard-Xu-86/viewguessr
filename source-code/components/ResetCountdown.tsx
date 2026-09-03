@@ -16,7 +16,7 @@ function fmt(ms: number): string {
 // (minuit local). Au passage de minuit, signale aux autres composants (ex. Offers)
 // de rafraîchir le nombre de parties restantes via l'événement « vg-day-reset ».
 export function ResetCountdown({
-  prefix = "Renouvellement dans",
+  prefix = "Renews in",
   className = "",
 }: {
   prefix?: string;

@@ -155,7 +155,7 @@ export function RoundGame({
       setStatus("intro");
     } catch (e) {
       setChecking(false);
-      setError(e instanceof Error ? e.message : "Erreur de chargement.");
+      setError(e instanceof Error ? e.message : "Loading error.");
       setStatus("error");
     }
   }

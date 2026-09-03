@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Plus ou moins",
+  title: "Higher or Lower",
   description:
-    "Deux vidéos YouTube face à face : laquelle fait le plus de vues ? Enchaîne la plus longue série possible — une erreur et c'est fini. Mode exclusif de l'accès à vie ViewGuessr.",
+    "Two YouTube videos head to head: which one has more views? Build the longest streak you can — one mistake and it's over. A ViewGuessr lifetime-access exclusive.",
   alternates: { canonical: "/play/plus-moins" },
   openGraph: {
-    title: "Plus ou moins · ViewGuessr",
+    title: "Higher or Lower · ViewGuessr",
     description:
-      "Deux vidéos YouTube face à face : laquelle fait le plus de vues ? Enchaîne la plus longue série possible.",
+      "Two YouTube videos head to head: which one has more views? Build the longest streak you can.",
     url: "/play/plus-moins",
   },
 };

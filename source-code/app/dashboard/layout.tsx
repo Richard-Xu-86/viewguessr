@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mon espace",
+  title: "My dashboard",
   description:
-    "Ton tableau de bord ViewGuessr : profil, statistiques, parties gratuites du jour et reprise de partie multijoueur.",
+    "Your ViewGuessr dashboard: profile, stats, today's free games and resuming a multiplayer game.",
   robots: { index: false, follow: false },
 };
 

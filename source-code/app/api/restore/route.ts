@@ -16,7 +16,7 @@ function svcHeaders(): Record<string, string> {
 export async function POST(req: NextRequest) {
   if (!SUPA_URL || !SERVICE_KEY) {
     return NextResponse.json(
-      { active: false, error: "Restauration indisponible pour le moment." },
+      { active: false, error: "Restore is unavailable right now." },
       { status: 500 }
     );
   }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   }
   if (code.length < 8) {
     return NextResponse.json(
-      { active: false, error: "Code invalide." },
+      { active: false, error: "Invalid code." },
       { status: 400 }
     );
   }
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const rows = res.ok ? await res.json() : [];
     return NextResponse.json({ active: Array.isArray(rows) && rows.length > 0 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erreur";
+    const message = err instanceof Error ? err.message : "Error";
     return NextResponse.json({ active: false, error: message }, { status: 500 });
   }
 }

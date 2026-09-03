@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { Aurora } from "@/components/Aurora";
 import { Logo, Wordmark } from "@/components/Logo";
 import { Button } from "@/components/Buttons";
+import { useT } from "@/lib/i18n";
 
 export default function NotFound() {
+  const t = useT();
   return (
     <>
       <Aurora />
@@ -35,7 +37,7 @@ export default function NotFound() {
                   404
                 </span>
                 <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-strawberry backdrop-blur">
-                  0 vue
+                  {t("nf.badge")}
                 </span>
               </div>
             </div>
@@ -47,8 +49,7 @@ export default function NotFound() {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="font-display text-3xl font-bold text-platinum sm:text-4xl"
           >
-            Cette page n&apos;a fait{" "}
-            <span className="hl-red">aucune vue</span>.
+            {t("nf.title1")} <span className="hl-red">{t("nf.title2")}</span>.
           </motion.h1>
 
           <motion.p
@@ -57,9 +58,7 @@ export default function NotFound() {
             transition={{ delay: 0.25, duration: 0.5 }}
             className="mt-4 max-w-md text-lavender"
           >
-            La vidéo que tu cherches est introuvable elle a peut-être été
-            supprimée, ou le lien est cassé. Mais il reste plein de vues à
-            deviner.
+            {t("nf.body")}
           </motion.p>
 
           <motion.div
@@ -69,11 +68,11 @@ export default function NotFound() {
             className="mt-8 flex flex-wrap justify-center gap-3"
           >
             <Link href="/">
-              <Button className="px-7 py-3.5 text-base">Retour à l&apos;accueil</Button>
+              <Button className="px-7 py-3.5 text-base">{t("common.backToHome")}</Button>
             </Link>
             <Link href="/play/solo">
               <Button variant="glass" className="px-7 py-3.5 text-base">
-                ▶ Jouer en solo
+                {t("nf.playSolo")}
               </Button>
             </Link>
           </motion.div>

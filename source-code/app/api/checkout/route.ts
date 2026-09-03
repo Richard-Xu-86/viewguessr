@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   const stripe = getStripe();
   if (!stripe) {
     return NextResponse.json(
-      { error: "Stripe non configuré (STRIPE_SECRET_KEY manquante)." },
+      { error: "Stripe is not configured (STRIPE_SECRET_KEY is missing)." },
       { status: 500 }
     );
   }
@@ -64,9 +64,9 @@ export async function POST(req: NextRequest) {
             currency: "cad",
             unit_amount: 599, // 5,99 $ CA
             product_data: {
-              name: "ViewGuessr Accès à vie",
+              name: "ViewGuessr Lifetime access",
               description:
-                "Débloque tout, à vie : parties solo illimitées, multijoueur illimité (jusqu'à 10 joueurs), paiement unique.",
+                "Unlock everything, for life: unlimited solo games, unlimited multiplayer (up to 10 players), one-time payment.",
               images: [`${origin}/logo.png`],
             },
           },
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erreur Stripe";
+    const message = err instanceof Error ? err.message : "Stripe error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

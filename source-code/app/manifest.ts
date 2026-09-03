@@ -2,13 +2,13 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ViewGuessr Devine les vues des vidéos YouTube",
+    name: "ViewGuessr — Guess the YouTube Views Game",
     short_name: "ViewGuessr",
     description:
-      "Le jeu gratuit où tu devines le nombre de vues de vraies vidéos YouTube. Solo et multijoueur, en français.",
+      "The free game where you guess the view count of real YouTube videos. Solo and multiplayer.",
     start_url: "/",
     display: "standalone",
-    lang: "fr",
+    lang: "en",
     dir: "ltr",
     background_color: "#F5F6FB",
     theme_color: "#EF233C",

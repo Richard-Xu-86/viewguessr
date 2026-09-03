@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     );
     return NextResponse.json({ videos });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erreur inconnue";
+    const message = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 502 });
   }
 }

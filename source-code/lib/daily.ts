@@ -176,8 +176,14 @@ export function emojiFor(points: number): string {
   return "🟥";
 }
 
-export function shareText(r: DailyResult): string {
-  return `Défi du jour #${dailyNumber(r.day)} sur ViewGuessr : ${r.score.toLocaleString(
-    "fr-FR"
+export function shareText(r: DailyResult, locale: "fr" | "en" = "en"): string {
+  const n = dailyNumber(r.day);
+  if (locale === "fr") {
+    return `Défi du jour #${n} sur ViewGuessr : ${r.score.toLocaleString(
+      "fr-FR"
+    )} pts\nview-guessr.com`;
+  }
+  return `ViewGuessr daily challenge #${n}: ${r.score.toLocaleString(
+    "en-US"
   )} pts\nview-guessr.com`;
 }

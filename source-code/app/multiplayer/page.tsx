@@ -12,10 +12,16 @@ import { GuessSlider } from "@/components/GuessSlider";
 import { VideoThumb } from "@/components/VideoThumb";
 import { CountUp } from "@/components/CountUp";
 import { Confetti } from "@/components/Confetti";
-import { compactViews, groupedViews } from "@/lib/format";
+import {
+  useT,
+  useLocale,
+  compactViewsL,
+  groupedViewsL,
+  intlLocale,
+} from "@/lib/i18n";
 import { HLCard } from "@/components/game/HigherLower";
 import type { GameMode } from "@/lib/useMultiplayer";
-import { scoreLabel } from "@/lib/scoring";
+import { scoreLabelKey } from "@/lib/scoring";
 import { isMultiplayerConfigured } from "@/lib/supabase";
 import { useMultiplayer } from "@/lib/useMultiplayer";
 import type { MPPlayer } from "@/lib/types";
@@ -95,6 +101,7 @@ function Avatar({
 
 export default function MultiplayerPage() {
   const mp = useMultiplayer();
+  const t = useT();
 
   // Nettoyage opportuniste : à l'ouverture du multijoueur, on demande au serveur
   // de purger les vieilles parties terminées. Best-effort, ignoré si ça échoue —
@@ -110,7 +117,7 @@ export default function MultiplayerPage() {
       mp.phase === "guessing" ||
       mp.phase === "waitingOthers" ||
       mp.phase === "roundResult";
-    if (inProgress && !window.confirm("Quitter la partie en cours ?")) return;
+    if (inProgress && !window.confirm(t("mp.leaveConfirm"))) return;
     mp.leave();
   }
 
@@ -119,13 +126,11 @@ export default function MultiplayerPage() {
       <>
         <Aurora />
         <main className="min-h-dvh">
-          <GameTopBar title="Multijoueur" />
+          <GameTopBar title={t("title.multi")} />
           <div className="mx-auto max-w-md px-4 py-24 text-center">
-            <p className="text-lavender">
-              Le multijoueur n'est pas configuré (variables Supabase manquantes).
-            </p>
+            <p className="text-lavender">{t("mp.notConfigured")}</p>
             <Link href="/" className="mt-4 inline-block text-sm text-strawberry">
-              Retour à l'accueil
+              {t("common.backToHome")}
             </Link>
           </div>
         </main>
@@ -138,14 +143,14 @@ export default function MultiplayerPage() {
       <Aurora />
       <main className="min-h-dvh pb-16">
         <GameTopBar
-          title="Multijoueur"
+          title={t("title.multi")}
           right={
             mp.game && (
               <button
                 onClick={handleLeave}
                 className="rounded-full glass px-3 py-1 text-sm font-semibold text-lavender hover:text-platinum"
               >
-                Quitter
+                {t("mp.leave")}
               </button>
             )
           }
@@ -171,7 +176,7 @@ export default function MultiplayerPage() {
           <AnimatePresence mode="wait">
             {mp.phase === "idle" && <Setup key="idle" mp={mp} />}
             {mp.phase === "connecting" && (
-              <Loader key="connecting" label="Connexion à la partie…" />
+              <Loader key="connecting" label={t("mp.connecting")} />
             )}
             {mp.phase === "error" && <ErrorView key="error" mp={mp} />}
             {mp.phase === "lobby" && <Lobby key="lobby" mp={mp} />}
@@ -189,6 +194,7 @@ export default function MultiplayerPage() {
 type MP = ReturnType<typeof useMultiplayer>;
 
 function Setup({ mp }: { mp: MP }) {
+  const t = useT();
   const [mode, setMode] = useState<"menu" | "create" | "join">("menu");
   const [code, setCode] = useState("");
   const [rounds, setRounds] = useState(5);
@@ -262,24 +268,22 @@ function Setup({ mp }: { mp: MP }) {
     >
       <div className="text-center">
         <h1 className="font-display text-4xl font-bold text-platinum">
-          Multi<span className="hl-red">joueur</span>
+          {t("mp.hero1")}<span className="hl-red">{t("mp.hero2")}</span>
         </h1>
-        <p className="mt-2 text-lavender">
-          Affronte tes amis sur les mêmes vidéos, en temps réel.
-        </p>
+        <p className="mt-2 text-lavender">{t("mp.heroSub")}</p>
       </div>
 
       {active && (
         <div className="rounded-2xl border border-strawberry/40 bg-strawberry/[0.07] p-4 text-center">
           <div className="text-sm font-semibold text-platinum">
-            Partie en cours ·{" "}
+            {t("mp.gameInProgress")}{" "}
             <span className="font-bold tracking-wider text-crimson">
               {active.code}
             </span>
           </div>
           <div className="mt-3 flex justify-center gap-2">
             <Button onClick={() => mp.resume(active)} className="px-5 py-2.5 text-sm">
-              Reprendre
+              {t("mp.resume")}
             </Button>
             <Button
               variant="glass"
@@ -289,7 +293,7 @@ function Setup({ mp }: { mp: MP }) {
               }}
               className="px-5 py-2.5 text-sm"
             >
-              Abandonner
+              {t("mp.discard")}
             </Button>
           </div>
         </div>
@@ -304,12 +308,12 @@ function Setup({ mp }: { mp: MP }) {
           />
           <div className="flex-1">
             <label className="text-[11px] font-semibold uppercase tracking-wider text-lavender">
-              Ton pseudo
+              {t("mp.yourName")}
             </label>
             <input
               value={mp.playerName}
               onChange={(e) => mp.setPlayerName(e.target.value)}
-              placeholder="Ton nom de joueur"
+              placeholder={t("mp.namePlaceholder")}
               maxLength={16}
               className="mt-1.5 w-full rounded-xl bg-black/[0.05] px-4 py-3 font-semibold text-platinum outline-none ring-1 ring-black/10 focus:ring-strawberry"
             />
@@ -320,14 +324,14 @@ function Setup({ mp }: { mp: MP }) {
       {mode === "menu" && (
         <div className="grid gap-3">
           <Button onClick={() => setMode("create")} className="py-4 text-lg">
-            Créer une partie
+            {t("mp.create")}
           </Button>
           <Button
             variant="glass"
             onClick={() => setMode("join")}
             className="py-4 text-lg"
           >
-            Rejoindre avec un code
+            {t("mp.joinWithCode")}
           </Button>
         </div>
       )}
@@ -337,28 +341,23 @@ function Setup({ mp }: { mp: MP }) {
       {mode === "create" && createLocked && (
         <div className="rounded-3xl glass-strong p-6 text-center">
           <h2 className="font-display text-xl font-bold text-platinum">
-            Limite du jour atteinte
+            {t("mp.limitTitle")}
           </h2>
-          <p className="mt-2 text-sm text-lavender">
-            Tu as déjà créé ta partie multijoueur gratuite des dernières 24 h. Tu peux
-            toujours <strong className="text-platinum">rejoindre</strong> la partie d&apos;un
-            ami avec un code — c&apos;est illimité. Pour héberger tes propres parties sans
-            limite, passe à l&apos;accès à vie.
-          </p>
+          <p className="mt-2 text-sm text-lavender">{t("mp.limitMsg")}</p>
           <div className="mt-5 flex flex-col gap-2">
             <Button onClick={() => setMode("join")} className="w-full py-3">
-              Rejoindre avec un code
+              {t("mp.joinWithCode")}
             </Button>
             <Link href="/pro">
               <Button variant="glass" className="w-full py-3">
-                Passer à vie · 5,99 $ CA
+                {t("mp.goLifetime")}
               </Button>
             </Link>
             <button
               onClick={() => setMode("menu")}
               className="mt-1 text-sm text-lavender transition-colors hover:text-platinum"
             >
-              Retour
+              {t("mp.back")}
             </button>
           </div>
         </div>
@@ -366,7 +365,7 @@ function Setup({ mp }: { mp: MP }) {
 
       {mode === "create" && !createLocked && (
         <div className="rounded-3xl glass-strong p-5">
-          <div className="text-sm font-semibold text-platinum">Mode de jeu</div>
+          <div className="text-sm font-semibold text-platinum">{t("mp.gameMode")}</div>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button
               onClick={() => setGmode("classic")}
@@ -376,9 +375,9 @@ function Setup({ mp }: { mp: MP }) {
                   : "border-platinum/15 bg-white text-lavender hover:border-platinum/40"
               }`}
             >
-              <span className="block text-sm font-bold">Classique</span>
+              <span className="block text-sm font-bold">{t("mp.modeClassic")}</span>
               <span className={`block text-[11px] font-medium ${gmode === "classic" ? "text-white/80" : ""}`}>
-                Devine les vues au curseur
+                {t("mp.modeClassicDesc")}
               </span>
             </button>
             {proUser ? (
@@ -390,9 +389,9 @@ function Setup({ mp }: { mp: MP }) {
                     : "border-platinum/15 bg-white text-lavender hover:border-platinum/40"
                 }`}
               >
-                <span className="block text-sm font-bold">Plus ou moins</span>
+                <span className="block text-sm font-bold">{t("mp.modeHl")}</span>
                 <span className={`block text-[11px] font-medium ${gmode === "hl" ? "text-white/80" : ""}`}>
-                  Deux vidéos, laquelle fait plus ?
+                  {t("mp.modeHlDesc")}
                 </span>
               </button>
             ) : (
@@ -401,17 +400,17 @@ function Setup({ mp }: { mp: MP }) {
                 className="rounded-xl border-2 border-dashed border-platinum/25 bg-[#FAF7F0] px-3 py-3 text-left transition hover:border-crimson/50"
               >
                 <span className="block text-sm font-bold text-platinum">
-                  Plus ou moins 🔒
+                  {t("mp.modeHlLocked")}
                 </span>
                 <span className="block text-[11px] font-medium text-lavender">
-                  Réservé à l&apos;accès à vie → le débloquer
+                  {t("mp.modeHlUnlock")}
                 </span>
               </Link>
             )}
           </div>
 
           <div className="mt-4 text-sm font-semibold text-platinum">
-            Nombre de manches
+            {t("mp.roundsCount")}
           </div>
           <div className="mt-3 flex gap-2">
             {[3, 5, 7, 10].map((r) => (
@@ -429,25 +428,27 @@ function Setup({ mp }: { mp: MP }) {
             ))}
           </div>
 
-          <div className="mt-4 text-sm font-semibold text-platinum">Thème</div>
+          <div className="mt-4 text-sm font-semibold text-platinum">
+            {t("common.theme")}
+          </div>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            {THEMES.map((t) => (
+            {THEMES.map((th) => (
               <button
-                key={t.key}
-                onClick={() => setTheme(t.key)}
+                key={th.key}
+                onClick={() => setTheme(th.key)}
                 className={`rounded-xl border-2 py-2.5 text-sm font-bold transition ${
-                  theme === t.key
+                  theme === th.key
                     ? "border-platinum bg-crimson text-white shadow-hard-sm"
                     : "border-platinum/15 bg-white text-lavender hover:border-platinum/40"
                 }`}
               >
-                {t.label}
+                {t(`theme.${th.key}`)}
               </button>
             ))}
           </div>
 
           <div className="mt-4 text-sm font-semibold text-platinum">
-            Langue des vidéos
+            {t("common.videoLang")}
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2">
             {LANGS.map((l) => (
@@ -461,19 +462,19 @@ function Setup({ mp }: { mp: MP }) {
                 }`}
               >
                 <span className="mr-1">{l.flag}</span>
-                {l.label}
+                {t(`lang.${l.key}`)}
               </button>
             ))}
           </div>
 
           <div className="mt-4 text-sm font-semibold text-platinum">
-            Nombre de joueurs
+            {t("mp.playersCount")}
           </div>
           <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-black/[0.05] px-3 py-2.5">
             <button
               onClick={() => setPlayers((p) => Math.max(2, p - 1))}
               disabled={players <= 2}
-              aria-label="Moins de joueurs"
+              aria-label={t("mp.fewerPlayers")}
               className="flex h-11 w-11 items-center justify-center rounded-lg bg-black/[0.06] text-2xl font-bold text-platinum transition hover:bg-black/10 disabled:opacity-30"
             >
               −
@@ -483,29 +484,27 @@ function Setup({ mp }: { mp: MP }) {
                 {players}
               </div>
               <div className="text-[11px] font-medium uppercase tracking-wider text-lavender">
-                joueurs
+                {t("mp.playersUnit")}
               </div>
             </div>
             <button
               onClick={() => setPlayers((p) => Math.min(maxAllowed, p + 1))}
               disabled={players >= maxAllowed}
-              aria-label="Plus de joueurs"
+              aria-label={t("mp.morePlayers")}
               className="flex h-11 w-11 items-center justify-center rounded-lg bg-black/[0.06] text-2xl font-bold text-platinum transition hover:bg-black/10 disabled:opacity-30"
             >
               +
             </button>
           </div>
           <div className="mt-2 text-center text-xs text-lavender">
-            {maxAllowed === 3
-              ? "Jusqu'à 3 joueurs · 10 avec l'accès à vie"
-              : "Jusqu'à 10 joueurs"}
+            {maxAllowed === 3 ? t("mp.upTo3") : t("mp.upTo10")}
           </div>
 
           <Button
             onClick={() =>
               mp.createGame(
                 rounds,
-                THEMES.find((t) => t.key === theme)?.cat ?? "all",
+                THEMES.find((th) => th.key === theme)?.cat ?? "all",
                 players,
                 lang,
                 gmode
@@ -513,13 +512,13 @@ function Setup({ mp }: { mp: MP }) {
             }
             className="mt-4 w-full py-4 text-lg"
           >
-            Créer la partie
+            {t("mp.createGameBtn")}
           </Button>
           <button
             onClick={() => setMode("menu")}
             className="mt-3 w-full text-sm font-semibold text-lavender hover:text-platinum"
           >
-            ← Retour
+            {t("common.back")}
           </button>
         </div>
       )}
@@ -528,12 +527,10 @@ function Setup({ mp }: { mp: MP }) {
         <div className="rounded-3xl glass-strong p-5">
           {inviteCode && (
             <div className="mb-3 rounded-xl border-2 border-crimson/30 bg-strawberry/10 px-4 py-2.5 text-center text-sm font-semibold text-crimson">
-              🎉 Tu as été invité ! Entre ton pseudo plus haut pour rejoindre.
+              {t("mp.invited")}
             </div>
           )}
-          <div className="text-sm font-semibold text-platinum">
-            Code de la partie
-          </div>
+          <div className="text-sm font-semibold text-platinum">{t("mp.code")}</div>
           <input
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
@@ -546,13 +543,13 @@ function Setup({ mp }: { mp: MP }) {
             disabled={code.length < 4}
             className="mt-5 w-full py-4 text-lg"
           >
-            Rejoindre
+            {t("mp.join.btn")}
           </Button>
           <button
             onClick={() => setMode("menu")}
             className="mt-3 w-full text-sm font-semibold text-lavender hover:text-platinum"
           >
-            ← Retour
+            {t("common.back")}
           </button>
         </div>
       )}
@@ -561,6 +558,7 @@ function Setup({ mp }: { mp: MP }) {
 }
 
 function ErrorView({ mp }: { mp: MP }) {
+  const t = useT();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -570,13 +568,14 @@ function ErrorView({ mp }: { mp: MP }) {
     >
       <p className="max-w-sm text-lavender">{mp.errorMsg}</p>
       <Button onClick={mp.leave} className="px-6 py-3">
-        Retour
+        {t("mp.back")}
       </Button>
     </motion.div>
   );
 }
 
 function Lobby({ mp }: { mp: MP }) {
+  const t = useT();
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const code = mp.game?.code ?? "";
@@ -601,7 +600,7 @@ function Lobby({ mp }: { mp: MP }) {
       try {
         await navigator.share({
           title: "ViewGuessr",
-          text: "Rejoins ma partie ViewGuessr 👀",
+          text: t("mp.shareText"),
           url,
         });
         return;
@@ -627,14 +626,18 @@ function Lobby({ mp }: { mp: MP }) {
       <div className="relative overflow-hidden rounded-2xl glass-strong p-7 text-center">
         <div className="relative">
           <div className="text-xs font-semibold uppercase tracking-[0.2em] text-lavender">
-            Code de la partie
+            {t("mp.code")}
           </div>
           {mp.isHL && (
             <div className="sticker mx-auto mt-2 w-fit -rotate-1">
-              Mode Plus ou moins
+              {t("mp.hlSticker")}
             </div>
           )}
-          <button onClick={copy} className="mt-2 block w-full" aria-label="Copier le code">
+          <button
+            onClick={copy}
+            className="mt-2 block w-full"
+            aria-label={t("mp.copyCode")}
+          >
             <span className="font-display text-6xl font-bold tracking-[0.15em] text-crimson">
               {code}
             </span>
@@ -644,18 +647,16 @@ function Lobby({ mp }: { mp: MP }) {
               onClick={copy}
               className="inline-flex items-center gap-2 rounded-xl glass px-5 py-2 text-sm font-semibold text-platinum transition hover:bg-black/10"
             >
-              {copied ? "Copié ✓" : "Copier le code"}
+              {copied ? t("mp.codeCopied") : t("mp.copyCode")}
             </button>
             <button
               onClick={shareLink}
               className="inline-flex items-center gap-2 rounded-xl border-2 border-platinum bg-crimson px-5 py-2 text-sm font-semibold text-white shadow-hard-sm transition hover:opacity-90"
             >
-              {linkCopied ? "Lien copié ✓" : "🔗 Lien d'invitation"}
+              {linkCopied ? t("mp.linkCopied") : t("mp.inviteLink")}
             </button>
           </div>
-          <div className="mt-3 text-xs text-lavender">
-            Partage le code, ou le lien : tes amis rejoignent en un clic
-          </div>
+          <div className="mt-3 text-xs text-lavender">{t("mp.shareHint")}</div>
         </div>
       </div>
 
@@ -663,11 +664,14 @@ function Lobby({ mp }: { mp: MP }) {
       <div className="rounded-3xl glass p-5">
         <div className="mb-3 flex items-center justify-between">
           <span className="text-sm font-semibold text-platinum">
-            Joueurs ({mp.activePlayers.length}/{mp.maxPlayers})
+            {t("mp.playersOf", {
+              n: mp.activePlayers.length,
+              max: mp.maxPlayers,
+            })}
           </span>
           <span className="flex items-center gap-1.5 text-xs font-medium text-lavender">
             <span className="h-2 w-2 animate-pulseGlow rounded-full bg-strawberry" />
-            Salon ouvert
+            {t("mp.roomOpen")}
           </span>
         </div>
         <div className="space-y-2">
@@ -683,7 +687,7 @@ function Lobby({ mp }: { mp: MP }) {
               <span className="font-semibold text-platinum"><ProName name={p.name} /></span>
               {p.id === mp.game?.host_id && (
                 <span className="ml-auto rounded-full bg-strawberry/20 px-2.5 py-0.5 text-xs font-bold text-strawberry">
-                  Hôte
+                  {t("mp.host")}
                 </span>
               )}
             </motion.div>
@@ -700,7 +704,7 @@ function Lobby({ mp }: { mp: MP }) {
                 +
               </span>
               <span className="text-sm font-medium text-lavender">
-                En attente d&apos;un joueur…
+                {t("mp.waitingPlayer")}
               </span>
             </motion.div>
           )}
@@ -714,18 +718,16 @@ function Lobby({ mp }: { mp: MP }) {
             disabled={mp.activePlayers.length < 2}
             className="w-full py-4 text-lg"
           >
-            Lancer la partie
+            {t("mp.start")}
           </Button>
           {mp.activePlayers.length < 2 && (
-            <p className="text-center text-sm text-lavender">
-              Il faut au moins 2 joueurs pour lancer la partie.
-            </p>
+            <p className="text-center text-sm text-lavender">{t("mp.needTwoLong")}</p>
           )}
         </div>
       ) : (
         <div className="flex items-center justify-center gap-3 rounded-2xl glass px-4 py-4 text-center text-lavender">
           <span className="h-2 w-2 animate-pulseGlow rounded-full bg-strawberry" />
-          En attente du lancement par l&apos;hôte…
+          {t("mp.waitingHostStart")}
         </div>
       )}
       </div>
@@ -739,6 +741,7 @@ function Lobby({ mp }: { mp: MP }) {
 
 // Chat en temps réel du lobby (synchro via le polling, comme le reste du multi).
 function LobbyChat({ mp }: { mp: MP }) {
+  const tr = useT();
   const [text, setText] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -757,7 +760,7 @@ function LobbyChat({ mp }: { mp: MP }) {
   return (
     <div className="rounded-3xl glass p-4">
       <div className="mb-2 text-sm font-semibold text-platinum">
-        Discussion du salon
+        {tr("mp.lobbyChat")}
       </div>
       <div
         ref={scrollRef}
@@ -765,7 +768,7 @@ function LobbyChat({ mp }: { mp: MP }) {
       >
         {mp.messages.length === 0 ? (
           <div className="py-6 text-center text-xs text-lavender">
-            Dis bonjour à tes adversaires 👋
+            {tr("mp.sayHi")}
           </div>
         ) : (
           mp.messages.map((m) => {
@@ -809,11 +812,11 @@ function LobbyChat({ mp }: { mp: MP }) {
             }
           }}
           maxLength={200}
-          placeholder="Écris un message…"
+          placeholder={tr("mp.chatPlaceholder")}
           className="min-w-0 flex-1 rounded-xl bg-black/[0.05] px-3 py-2.5 text-sm text-platinum outline-none ring-1 ring-black/10 focus:ring-strawberry"
         />
         <Button onClick={send} disabled={!text.trim()} className="px-4 py-2.5 text-sm">
-          Envoyer
+          {tr("mp.send")}
         </Button>
       </div>
     </div>
@@ -824,6 +827,7 @@ function LobbyChat({ mp }: { mp: MP }) {
 // Réutilise les mêmes messages que le lobby (synchro par polling). Une pastille
 // indique les messages non lus quand le panneau est fermé.
 function GameChat({ mp }: { mp: MP }) {
+  const tr = useT();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -854,10 +858,10 @@ function GameChat({ mp }: { mp: MP }) {
       {open && (
         <div className="mb-2 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border-2 border-platinum/15 bg-[#FAF7F0] shadow-hard">
           <div className="flex items-center justify-between border-b-2 border-platinum/10 bg-white px-3 py-2">
-            <span className="text-sm font-semibold text-platinum">Discussion</span>
+            <span className="text-sm font-semibold text-platinum">{tr("mp.chat")}</span>
             <button
               onClick={() => setOpen(false)}
-              aria-label="Fermer le chat"
+              aria-label={tr("mp.closeChat")}
               className="text-lavender transition-colors hover:text-platinum"
             >
               ✕
@@ -866,7 +870,7 @@ function GameChat({ mp }: { mp: MP }) {
           <div ref={scrollRef} className="h-64 space-y-2 overflow-y-auto px-3 py-2">
             {mp.messages.length === 0 ? (
               <div className="py-6 text-center text-xs text-lavender">
-                Aucun message pour l&apos;instant.
+                {tr("mp.noMessages")}
               </div>
             ) : (
               mp.messages.map((m) => {
@@ -910,18 +914,18 @@ function GameChat({ mp }: { mp: MP }) {
                 }
               }}
               maxLength={200}
-              placeholder="Écris un message…"
+              placeholder={tr("mp.chatPlaceholder")}
               className="min-w-0 flex-1 rounded-xl bg-black/[0.05] px-3 py-2 text-sm text-platinum outline-none ring-1 ring-black/10 focus:ring-strawberry"
             />
             <Button onClick={send} disabled={!text.trim()} className="px-3 py-2 text-sm">
-              Envoyer
+              {tr("mp.send")}
             </Button>
           </div>
         </div>
       )}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="Discussion"
+        aria-label={tr("mp.chat")}
         className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-platinum bg-crimson text-xl shadow-hard-sm transition-transform hover:scale-105"
       >
         💬
@@ -968,6 +972,7 @@ function Scoreboard({ mp }: { mp: MP }) {
 }
 
 function Playing({ mp }: { mp: MP }) {
+  const t = useT();
   const total = mp.game?.rounds_total ?? 0;
   const answeredIds = new Set(mp.roundGuesses.map((g) => g.player_id));
 
@@ -1034,14 +1039,14 @@ function Playing({ mp }: { mp: MP }) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 flex items-center justify-center bg-space-deep/90 backdrop-blur"
           >
-            <Loader label="Manche suivante…" />
+            <Loader label={t("mp.nextRoundLoader")} />
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex items-center justify-between gap-2">
         <span className="rounded-full glass px-3 py-1 text-sm font-semibold text-lavender">
-          Manche {mp.currentRound}/{total}
+          {t("game.round", { i: mp.currentRound, n: total })}
         </span>
         <div className="flex items-center gap-2">
           {mp.phase === "guessing" && (
@@ -1090,7 +1095,7 @@ function Playing({ mp }: { mp: MP }) {
                       }}
                       className="w-full py-3"
                     >
-                      ▲ Plus de vues
+                      {t("pm.more")}
                     </Button>
                     <Button
                       variant="glass"
@@ -1102,14 +1107,13 @@ function Playing({ mp }: { mp: MP }) {
                       }}
                       className="w-full py-3"
                     >
-                      ▼ Moins de vues
+                      {t("pm.less")}
                     </Button>
                   </div>
                 </HLCard>
               </div>
               <p className="text-center text-xs font-semibold text-lavender">
-                La vidéo de droite fait-elle plus ou moins de vues que celle de
-                gauche&nbsp;? +1 000 pts par bonne réponse.
+                {t("mp.hlQuestion")}
               </p>
             </>
           ) : (
@@ -1127,7 +1131,7 @@ function Playing({ mp }: { mp: MP }) {
                     }}
                     className="mt-4 w-full py-3.5 text-lg"
                   >
-                    Valider ma réponse
+                    {t("game.validate")}
                   </Button>
                 </div>
               </>
@@ -1152,10 +1156,10 @@ function Playing({ mp }: { mp: MP }) {
               ✓
             </motion.div>
             <div className="font-display text-2xl font-bold text-platinum">
-              Réponse envoyée !
+              {t("mp.answerSent")}
             </div>
             <div className="mt-1 text-lavender">
-              On attend que tout le monde réponde…{" "}
+              {t("mp.waitingAll")}{" "}
               <span className="font-semibold text-platinum">
                 {mp.answeredCount}/{mp.activePlayers.length}
               </span>
@@ -1185,7 +1189,7 @@ function Playing({ mp }: { mp: MP }) {
                       <span className="flex h-5 w-5 items-center justify-center rounded-full bg-strawberry/20 text-xs">
                         ✓
                       </span>
-                      A répondu
+                      {t("mp.answered")}
                     </motion.span>
                   ) : (
                     <motion.span
@@ -1193,7 +1197,7 @@ function Playing({ mp }: { mp: MP }) {
                       transition={{ duration: 1.3, repeat: Infinity }}
                       className="text-sm text-lavender"
                     >
-                      Réfléchit…
+                      {t("mp.thinking")}
                     </motion.span>
                   )}
                 </div>
@@ -1202,7 +1206,7 @@ function Playing({ mp }: { mp: MP }) {
           </div>
 
           <p className="text-center text-xs text-lavender">
-            Les résultats s&apos;afficheront en même temps pour tout le monde
+            {t("mp.resultsTogether")}
           </p>
         </motion.div>
       )}
@@ -1218,6 +1222,8 @@ function Playing({ mp }: { mp: MP }) {
 }
 
 function RoundResult({ mp }: { mp: MP }) {
+  const t = useT();
+  const { locale } = useLocale();
   // En « Plus ou moins », la vidéo révélée est celle de DROITE de la paire.
   const video = mp.isHL && mp.hlPair ? mp.hlPair.right : mp.currentVideo!;
   const hlAnswer =
@@ -1273,7 +1279,7 @@ function RoundResult({ mp }: { mp: MP }) {
       <div className="relative overflow-hidden rounded-3xl glass-strong p-4 text-center">
         {reveal && mp.lastPoints >= 4500 && <Confetti count={18} />}
         <div className="text-xs font-semibold uppercase tracking-widest text-lavender">
-          {reveal ? "Vraies vues" : "Révélation…"}
+          {reveal ? t("reveal.realViews") : t("mp.revealing")}
         </div>
         {reveal ? (
           <motion.div
@@ -1286,18 +1292,21 @@ function RoundResult({ mp }: { mp: MP }) {
             </div>
             {hlAnswer && mp.hlPair && (
               <div className="mt-2 text-sm font-bold text-platinum">
-                C&apos;était {hlAnswer === "higher" ? "▲ PLUS" : "▼ MOINS"}{" "}
+                {t("mp.itWas")}{" "}
+                {hlAnswer === "higher" ? t("mp.hlHigher") : t("mp.hlLower")}{" "}
                 <span className="font-medium text-lavender">
-                  (contre {groupedViews(mp.hlPair.left.viewCount)} vues)
+                  {t("mp.hlVersus", {
+                    v: groupedViewsL(mp.hlPair.left.viewCount, locale),
+                  })}
                 </span>
               </div>
             )}
             <div className="mt-3 inline-block rounded-xl border-2 border-platinum bg-crimson px-4 py-1.5 text-sm font-bold text-white shadow-hard-sm">
               {mp.isHL
                 ? mp.lastPoints > 0
-                  ? "+1 000 pts · Bonne réponse !"
-                  : "+0 pt · Raté…"
-                : `+${mp.lastPoints} pts · ${scoreLabel(mp.lastPoints)}`}
+                  ? t("mp.hlCorrect")
+                  : t("mp.hlWrong")
+                : `+${mp.lastPoints} ${t("common.points")} · ${t(scoreLabelKey(mp.lastPoints))}`}
             </div>
           </motion.div>
         ) : (
@@ -1320,7 +1329,7 @@ function RoundResult({ mp }: { mp: MP }) {
           >
             <div className="rounded-3xl glass p-4">
               <div className="mb-2 text-sm font-semibold text-platinum">
-                Résultats de la manche
+                {t("mp.roundResults")}
               </div>
               <div className="space-y-1.5">
                 {rows.map(({ g, player }, i) => (
@@ -1334,16 +1343,16 @@ function RoundResult({ mp }: { mp: MP }) {
                     <span className="w-4 text-center font-bold text-lavender">{i + 1}</span>
                     <Avatar name={player?.name ?? "?"} className="h-6 w-6 rounded-md text-xs" />
                     <span className="flex-1 truncate font-semibold text-platinum">
-      <ProName name={player?.name ?? "Joueur"} />
+                      <ProName name={player?.name ?? t("mp.playerFallback")} />
                     </span>
                     <span className="text-xs font-semibold text-lavender">
                       {mp.isHL
                         ? g.guess === 1
-                          ? "▲ Plus"
+                          ? t("mp.hlHigherShort")
                           : g.guess === 0
-                            ? "▼ Moins"
+                            ? t("mp.hlLowerShort")
                             : "—"
-                        : compactViews(g.guess)}
+                        : compactViewsL(g.guess, locale)}
                     </span>
                     <span className="w-12 text-right font-extrabold tabular-nums text-strawberry">
                       +{g.points}
@@ -1358,7 +1367,10 @@ function RoundResult({ mp }: { mp: MP }) {
             {mp.iAmReady ? (
               <div className="rounded-2xl glass px-4 py-4 text-center">
                 <div className="font-semibold text-platinum">
-                  En attente des autres… {mp.readyCount}/{mp.activePlayers.length} prêts
+                  {t("mp.waitingReady", {
+                    n: mp.readyCount,
+                    total: mp.activePlayers.length,
+                  })}
                 </div>
                 <div className="mt-2 flex justify-center gap-2">
                   {mp.activePlayers.map((p, i) => (
@@ -1373,13 +1385,16 @@ function RoundResult({ mp }: { mp: MP }) {
               </div>
             ) : (
               <Button onClick={mp.confirmReady} className="w-full py-3.5 text-lg">
-                Je suis prêt ({mp.readyCount}/{mp.activePlayers.length})
+                {t("mp.imReady", {
+                  n: mp.readyCount,
+                  total: mp.activePlayers.length,
+                })}
               </Button>
             )}
 
             {everyoneReady && (
               <div className="text-center text-sm text-lavender">
-                Tout le monde est prêt c&apos;est parti !
+                {t("mp.everyoneReady")}
               </div>
             )}
           </motion.div>
@@ -1405,6 +1420,7 @@ function PodiumCol({
   rank: 1 | 2 | 3;
   delay: number;
 }) {
+  const { locale } = useLocale();
   const cfg = PODIUM[rank];
   const winner = rank === 1;
   return (
@@ -1422,7 +1438,7 @@ function PodiumCol({
         <ProName name={player.name} />
       </div>
       <div className="text-xs font-bold tabular-nums text-strawberry">
-        {player.score.toLocaleString("fr-FR")}
+        {player.score.toLocaleString(intlLocale(locale))}
       </div>
       <div
         className={`mt-2 flex ${cfg.h} w-full items-start justify-center rounded-t-2xl bg-gradient-to-b ${cfg.grad} pt-2 font-display text-2xl font-black text-white shadow-card`}
@@ -1434,9 +1450,11 @@ function PodiumCol({
 }
 
 function Finished({ mp }: { mp: MP }) {
+  const t = useT();
+  const { locale } = useLocale();
   // Journalise mon résultat + fanfare, une seule fois.
   useEffect(() => {
-    logActivity(mp.playerName || "Un joueur", mp.myScore, "multi");
+    logActivity(mp.playerName || t("mp.aPlayer"), mp.myScore, "multi");
     resumeAudio();
     const order = [...mp.activePlayers].sort((a, b) => b.score - a.score);
     const won = order[0]?.id === mp.playerId && order.length > 1;
@@ -1465,14 +1483,14 @@ function Finished({ mp }: { mp: MP }) {
       {iWon && <Confetti />}
       <div className="text-center">
         <div className="text-sm font-semibold uppercase tracking-[0.2em] text-strawberry">
-          Résultats
+          {t("mp.results")}
         </div>
         <h1 className="mt-1 font-display text-4xl font-bold text-platinum">
-          Partie terminée
+          {t("mp.gameOver")}
         </h1>
         {iWon && (
           <div className="sticker mx-auto mt-3 w-fit -rotate-2 !border-crimson !text-crimson !shadow-hard-red-sm">
-            🏆 Tu as gagné !
+            {t("mp.youWon")}
           </div>
         )}
       </div>
@@ -1498,7 +1516,7 @@ function Finished({ mp }: { mp: MP }) {
       {/* Classement complet */}
       <div className="mt-6">
         <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-lavender">
-          Classement
+          {t("mp.ranking")}
         </div>
         <div className="space-y-2">
           {ranked.map((p, i) => (
@@ -1521,7 +1539,7 @@ function Finished({ mp }: { mp: MP }) {
                 <ProName name={p.name} />
               </span>
               <span className="font-extrabold tabular-nums text-platinum">
-                {p.score.toLocaleString("fr-FR")}
+                {p.score.toLocaleString(intlLocale(locale))}
               </span>
             </motion.div>
           ))}
@@ -1537,32 +1555,29 @@ function Finished({ mp }: { mp: MP }) {
             disabled={mp.advancing || mp.activePlayers.length < 2}
             className="w-full max-w-xs py-3.5 text-lg"
           >
-            {mp.advancing ? "Relance…" : "🔄 Rejouer avec les mêmes"}
+            {mp.advancing ? t("mp.rematching") : t("mp.rematch")}
           </Button>
           <div className="flex justify-center gap-3">
             <Button onClick={mp.leave} variant="glass" className="px-6 py-3">
-              Nouvelle partie
+              {t("mp.newGame")}
             </Button>
             <Link href="/">
               <Button variant="glass" className="px-6 py-3">
-                Accueil
+                {t("common.home")}
               </Button>
             </Link>
           </div>
         </div>
       ) : (
         <div className="mt-7 flex flex-col items-center gap-3">
-          <p className="text-center text-sm text-lavender">
-            L&apos;hôte peut relancer une partie avec les mêmes joueurs — reste ici, tu
-            seras ramené au salon automatiquement.
-          </p>
+          <p className="text-center text-sm text-lavender">{t("mp.rematchHint")}</p>
           <div className="flex justify-center gap-3">
             <Button onClick={mp.leave} variant="glass" className="px-6 py-3">
-              Nouvelle partie
+              {t("mp.newGame")}
             </Button>
             <Link href="/">
               <Button variant="glass" className="px-6 py-3">
-                Accueil
+                {t("common.home")}
               </Button>
             </Link>
           </div>

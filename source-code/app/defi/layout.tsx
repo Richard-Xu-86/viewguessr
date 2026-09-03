@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Défi du jour",
+  title: "Daily challenge",
   description:
-    "Le défi quotidien de ViewGuessr : 5 vidéos YouTube, les mêmes pour tout le monde, une seule tentative par jour. Bats ton score, garde ta série et partage ton résultat.",
+    "The ViewGuessr daily challenge: 5 YouTube videos, the same for everyone, one attempt per day. Beat your score, keep your streak and share your result.",
   alternates: { canonical: "/defi" },
 };
 

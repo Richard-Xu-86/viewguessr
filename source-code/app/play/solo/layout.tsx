@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Partie solo",
+  title: "Solo game",
   description:
-    "Joue à ViewGuessr en solo : une vraie vidéo YouTube tendance s'affiche, son compteur de vues masqué, et tu devines le nombre de vues manche après manche. Gratuit, sans inscription.",
+    "Play ViewGuessr solo: a real trending YouTube video appears with its view count hidden, and you guess the number of views round after round. Free, no sign-up.",
   alternates: { canonical: "/play/solo" },
   openGraph: {
-    title: "Partie solo · ViewGuessr",
+    title: "Solo game · ViewGuessr",
     description:
-      "Devine le nombre de vues de vraies vidéos YouTube, manche après manche. Mode solo de ViewGuessr.",
+      "Guess the view count of real YouTube videos, round after round. The ViewGuessr solo mode.",
     url: "/play/solo",
   },
 };
